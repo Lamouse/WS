@@ -142,6 +142,9 @@
         <DataProperty IRI="#hasCover"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="#hasID"/>
+    </Declaration>
+    <Declaration>
         <DataProperty IRI="#hasName"/>
     </Declaration>
     <Declaration>
@@ -420,6 +423,9 @@
         <DataProperty IRI="#hasCover"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
+        <DataProperty IRI="#hasID"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
         <DataProperty IRI="#hasName"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
@@ -460,6 +466,18 @@
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasCover"/>
+        <Class IRI="#TV_Show"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#hasID"/>
+        <Class IRI="#Movie"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#hasID"/>
+        <Class IRI="#Person"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#hasID"/>
         <Class IRI="#TV_Show"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
@@ -525,6 +543,10 @@
     <DataPropertyRange>
         <DataProperty IRI="#hasCover"/>
         <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#hasID"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="#hasName"/>
