@@ -546,7 +546,7 @@
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="#hasID"/>
-        <Datatype abbreviatedIRI="xsd:int"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="#hasName"/>
