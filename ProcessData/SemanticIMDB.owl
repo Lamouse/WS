@@ -34,15 +34,8 @@
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasActor">
         <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Actor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <inverseOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#isActorIn"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </ObjectProperty>
     
 
@@ -51,14 +44,7 @@
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasDirector">
         <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Director"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
     </ObjectProperty>
     
 
@@ -67,14 +53,7 @@
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasGenre">
         <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Genre"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
     </ObjectProperty>
     
 
@@ -82,15 +61,8 @@
     <!-- http://www.semanticweb.org/ontology/SemanticIMDB#hasWriter -->
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasWriter">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Writer"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </ObjectProperty>
     
 
@@ -99,14 +71,7 @@
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#isActorIn">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Actor"/>
-        <rdfs:range>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:range>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
     </ObjectProperty>
     
 
@@ -115,15 +80,8 @@
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#isDirectorIn">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Director"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <inverseOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasDirector"/>
-        <rdfs:range>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:range>
     </ObjectProperty>
     
 
@@ -132,15 +90,8 @@
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#isGenreOf">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Genre"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <inverseOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasGenre"/>
-        <rdfs:range>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:range>
     </ObjectProperty>
     
 
@@ -148,16 +99,9 @@
     <!-- http://www.semanticweb.org/ontology/SemanticIMDB#isWriterIn -->
 
     <ObjectProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#isWriterIn">
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Writer"/>
         <inverseOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasWriter"/>
-        <rdfs:range>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:range>
     </ObjectProperty>
     
 
@@ -197,15 +141,8 @@
 
     <DatatypeProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasCover">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </DatatypeProperty>
     
 
@@ -214,16 +151,8 @@
 
     <DatatypeProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasID">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Person"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </DatatypeProperty>
     
 
@@ -262,15 +191,8 @@
 
     <DatatypeProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasPlot">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </DatatypeProperty>
     
 
@@ -279,15 +201,8 @@
 
     <DatatypeProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasRating">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <rdfs:range rdf:resource="&xsd;float"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </DatatypeProperty>
     
 
@@ -296,15 +211,8 @@
 
     <DatatypeProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasRuntime">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <rdfs:range rdf:resource="&xsd;int"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </DatatypeProperty>
     
 
@@ -322,15 +230,8 @@
 
     <DatatypeProperty rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#hasTitle">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <Class>
-                <unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
-                </unionOf>
-            </Class>
-        </rdfs:domain>
     </DatatypeProperty>
     
 
@@ -360,6 +261,13 @@
 
     <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Actor">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Person"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#isActorIn"/>
+                <onClass rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person"/>
+                <minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</minQualifiedCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
     </Class>
     
 
@@ -368,31 +276,151 @@
 
     <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Director">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Person"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#isDirectorIn"/>
+                <onClass rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person"/>
+                <minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</minQualifiedCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
     </Class>
     
 
 
     <!-- http://www.semanticweb.org/ontology/SemanticIMDB#Genre -->
 
-    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Genre"/>
+    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Genre">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#isGenreOf"/>
+                <onClass rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
+                <minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</minQualifiedCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontology/SemanticIMDB#Media -->
+
+    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Media">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasPlot"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasActor"/>
+                <onClass rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Actor"/>
+                <minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</minQualifiedCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasGenre"/>
+                <onClass rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Genre"/>
+                <minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</minQualifiedCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasRuntime"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;int"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasTitle"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasRating"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;float"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person -->
+
+    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasID"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
     
 
 
     <!-- http://www.semanticweb.org/ontology/SemanticIMDB#Movie -->
 
-    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie"/>
+    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Movie">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasYear"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;int"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
     
 
 
     <!-- http://www.semanticweb.org/ontology/SemanticIMDB#Person -->
 
-    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Person"/>
+    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Person">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasBirthDate"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasName"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
     
 
 
     <!-- http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show -->
 
-    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show"/>
+    <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#TV_Show">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasSeasonYears"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#hasNumberSeason"/>
+                <qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="&xsd;int"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
     
 
 
@@ -400,6 +428,13 @@
 
     <Class rdf:about="http://www.semanticweb.org/ontology/SemanticIMDB#Writer">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Person"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#isWriterIn"/>
+                <onClass rdf:resource="http://www.semanticweb.org/ontology/SemanticIMDB#Media_Person"/>
+                <minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</minQualifiedCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
     </Class>
     
 

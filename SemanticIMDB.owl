@@ -31,6 +31,12 @@
         <Class IRI="#Genre"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Media"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Media_Person"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Movie"/>
     </Declaration>
     <Declaration>
@@ -188,12 +194,140 @@
         <Class IRI="#Person"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Actor"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#isActorIn"/>
+            <Class IRI="#Media_Person"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Director"/>
         <Class IRI="#Person"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Director"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#isDirectorIn"/>
+            <Class IRI="#Media_Person"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Genre"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#isGenreOf"/>
+            <Class IRI="#Media"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media"/>
+        <Class IRI="#Media_Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#hasActor"/>
+            <Class IRI="#Actor"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#hasGenre"/>
+            <Class IRI="#Genre"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasPlot"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasRating"/>
+            <Datatype abbreviatedIRI="xsd:float"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasRuntime"/>
+            <Datatype abbreviatedIRI="xsd:int"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasTitle"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Media_Person"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasID"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Movie"/>
+        <Class IRI="#Media"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Movie"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasYear"/>
+            <Datatype abbreviatedIRI="xsd:int"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Person"/>
+        <Class IRI="#Media_Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Person"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasBirthDate"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Person"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasName"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#TV_Show"/>
+        <Class IRI="#Media"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#TV_Show"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasNumberSeason"/>
+            <Datatype abbreviatedIRI="xsd:int"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#TV_Show"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasSeasonYears"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Writer"/>
         <Class IRI="#Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Writer"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#isWriterIn"/>
+            <Class IRI="#Media_Person"/>
+        </ObjectMinCardinality>
     </SubClassOf>
     <DisjointClasses>
         <Class IRI="#Genre"/>
@@ -323,31 +457,19 @@
     </InverseObjectProperties>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#hasActor"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#hasDirector"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#hasGenre"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#hasWriter"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#isActorIn"/>
@@ -383,31 +505,19 @@
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#isActorIn"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#isDirectorIn"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#isGenreOf"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#isWriterIn"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </ObjectPropertyRange>
     <FunctionalDataProperty>
         <DataProperty IRI="#hasBiography"/>
@@ -455,18 +565,11 @@
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasCover"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasID"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#Person"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media_Person"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasName"/>
@@ -482,24 +585,15 @@
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasPlot"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasRating"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasRuntime"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasSeasonYears"/>
@@ -507,10 +601,7 @@
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasTitle"/>
-        <ObjectUnionOf>
-            <Class IRI="#Movie"/>
-            <Class IRI="#TV_Show"/>
-        </ObjectUnionOf>
+        <Class IRI="#Media"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#hasYear"/>
