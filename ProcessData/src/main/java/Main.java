@@ -274,9 +274,9 @@ public class Main {
         isWriterIn = model.createProperty(namespace, "isWriterIn");
 
         // json files
-        String dic_movies = "dic_movies.json";
-        String dic_people = "dic_people.json";
-        String dic_tv_shows = "dic_tv_shows.json";
+        String dic_movies = "dic_movies_popular.json";
+        String dic_people = "dic_people_popular.json";
+        String dic_tv_shows = "dic_tv_shows_popular.json";
 
         create_movie(dic_movies);
         create_tv_shows(dic_tv_shows);
