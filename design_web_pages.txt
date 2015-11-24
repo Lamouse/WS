@@ -1,0 +1,23 @@
+Home page:
+	design the list of the "Last 30 Clicks"
+		Type, Title, Gener
+
+(First 50 items)
+List_Movies:
+	Type, Title(date), Gener, Rating, Runtime
+
+List_TV_Shows:
+	Type, Title(date), Gener, Rating, Runtime
+
+List_Celebs:
+	Type, Name, Jobs, date_year
+
+
+Detail_page_Movie:
+	Cover, Type, Title(date), Gener, Rating, Runtime, plot, list Actors, list list directors, list writers
+
+Detail_page_TV_Show:
+	Cover, Type, Title(SeasonYears), Gener, Rating, Runtime, plot, number of seasons, list Actors, list list directors, list writers
+
+Detail_page_Celebs:
+	photo, Type, Name, birth_date, biography, list of media actor in, list of media director in, list of media writer in
