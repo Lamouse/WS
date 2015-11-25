@@ -1,5 +1,12 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
+
+<jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
 
 <head>
 
@@ -69,34 +76,37 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#movies"><i class="fa fa-fw fa-arrows-v"></i> Movies <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="movies" class="collapse">
                             <li>
-                                <a href="#">All</a>
+                                <a href="justToTest.jsp?category=Movie&kind=All"> All </a>
                             </li>
-                            <li>
-                                <a href="#">Action</a>
-                            </li>
-                            <li>
-                                <a href="#">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="#">...</a>
-                            </li>
+
+                            <%
+                                List<String> temp1 = genrelist.getGenrelist("Movie");
+                                for (int i=0; i<temp1.size() ;i++){
+                            %>
+                                <li>
+                                    <a href=<%= "justToTest.jsp?category=Movie&kind="+temp1.get(i)%>> <%= temp1.get(i)%> </a>
+                                </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#tv_shows"><i class="fa fa-fw fa-arrows-v"></i> TV-Shows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="tv_shows" class="collapse">
                             <li>
-                                <a href="#">All</a>
+                                <a href="justToTest.jsp?category=TV_Show&kind=All"> All </a>
                             </li>
+                            <%
+                                List<String> temp2 = genrelist.getGenrelist("TV_Show");
+                                for (int i=0; i<temp2.size() ;i++){
+                            %>
                             <li>
-                                <a href="#">Action</a>
+                                <a href=<%= "justToTest.jsp?category=TV_Show&kind="+temp2.get(i)%>> <%= temp2.get(i)%> </a>
                             </li>
-                            <li>
-                                <a href="#">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="#">...</a>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
