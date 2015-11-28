@@ -119,6 +119,116 @@ public class MyOntology {
     }
 
     @WebMethod
+    public ArrayList<String> getListMediabyGenre(String item, String genre, int page) {
+        ArrayList<String> result = new ArrayList<String>();
+        String sparqlQuery;
+
+        if(item.equals("Movie") || item.equals("TV_Show")) {
+            if ("All".equals(genre)) {
+                sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                        "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                        "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                        "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+                        "\n" +
+                        "SELECT ?movie\n" +
+                        "\tWHERE {\n" +
+                        "\t\t?movie rdf:type my:"+item+".\n" +
+                        "\t\t?movie my:hasTitle ?title.\n" +
+                        "\t\t?movie my:hasRating ?rating.\n" +
+                        "\t}\n" +
+                        "\tORDER BY DESC(?rating) ?title\n" +
+                        "\tOFFSET " + page + "\n" +
+                        "\tLIMIT 30";
+            } else {
+                sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                        "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                        "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                        "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+                        "\n" +
+                        "SELECT ?movie\n" +
+                        "\tWHERE {\n" +
+                        "\t\t?movie rdf:type my:"+item+".\n" +
+                        "\t\t?movie my:hasGenre my:" + genre + ".\n" +
+                        "\t\t?movie my:hasTitle ?title.\n" +
+                        "\t\t?movie my:hasRating ?rating.\n" +
+                        "\t}\n" +
+                        "\tORDER BY DESC(?rating) ?title\n" +
+                        "\tOFFSET " + page + "\n" +
+                        "\tLIMIT 30";
+            }
+
+            Query query = QueryFactory.create(sparqlQuery);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet results = qe.execSelect();
+
+            while (results.hasNext()) {
+                QuerySolution qs = results.nextSolution();
+                RDFNode temp = qs.get("movie");
+                result.add(temp.asNode().getLocalName());
+            }
+
+            qe.close();
+        }
+        return result;
+    }
+
+    @WebMethod
+    public ArrayList<String> getListPersonbyKind(String kind, int page) {
+        ArrayList<String> result = new ArrayList<String>();
+        String sparqlQuery;
+
+        if ("All".equals(kind)) {
+            sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+                    "\n" +
+                    "SELECT DISTINCT ?person\n" +
+                    "\tWHERE {\n" +
+                    "\t\t?subclasse rdfs:subClassOf my:Person.\n" +
+                    "\t\t?person rdf:type ?subclasse.\n" +
+                    "\t\t?person my:hasName ?name\n" +
+                    "\t}\n" +
+                    "\tORDER BY ?name\n" +
+                    "\tOFFSET "+page+"\n" +
+                    "\tLIMIT 30";
+        }
+        else {
+            sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+                    "\n" +
+                    "SELECT DISTINCT ?person\n" +
+                    "\tWHERE {\n" +
+                    "\t\t?person rdf:type my:"+kind+".\n" +
+                    "\t\t?person my:hasName ?name\n" +
+                    "\t}\n" +
+                    "\tORDER BY ?name\n" +
+                    "\tOFFSET "+page+"\n" +
+                    "\tLIMIT 30";
+        }
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("person");
+            result.add(temp.asNode().getLocalName());
+        }
+
+        qe.close();
+
+        return result;
+    }
+
+    @WebMethod
     public void addIemToLastClicks(String local_name) {
         if(lastClicks.contains(local_name))
             lastClicks.remove(local_name);

@@ -1,12 +1,5 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="en">
-
-<jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
 
 <head>
 
@@ -76,53 +69,50 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#movies"><i class="fa fa-fw fa-arrows-v"></i> Movies <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="movies" class="collapse">
                             <li>
-                                <a href="justToTest.jsp?category=Movie&kind=All"> All </a>
+                                <a href="movie.html">All</a>
                             </li>
-
-                            <%
-                                List<String> temp1 = genrelist.getGenrelist("Movie");
-                                for (int i=0; i<temp1.size() ;i++){
-                            %>
-                                <li>
-                                    <a href=<%= "justToTest.jsp?category=Movie&kind="+temp1.get(i)%>> <%= temp1.get(i)%> </a>
-                                </li>
-                            <%
-                                }
-                            %>
+                            <li>
+                                <a href="movie.html">Action</a>
+                            </li>
+                            <li>
+                                <a href="movie.html">Adventure</a>
+                            </li>
+                            <li>
+                                <a href="#">...</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#tv_shows"><i class="fa fa-fw fa-arrows-v"></i> TV-Shows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="tv_shows" class="collapse">
                             <li>
-                                <a href="justToTest.jsp?category=TV_Show&kind=All"> All </a>
+                                <a href="tv_show.html">All</a>
                             </li>
-                            <%
-                                List<String> temp2 = genrelist.getGenrelist("TV_Show");
-                                for (int i=0; i<temp2.size() ;i++){
-                            %>
                             <li>
-                                <a href=<%= "justToTest.jsp?category=TV_Show&kind="+temp2.get(i)%>> <%= temp2.get(i)%> </a>
+                                <a href="tv_show.html">Action</a>
                             </li>
-                            <%
-                                }
-                            %>
+                            <li>
+                                <a href="tv_show.html">Adventure</a>
+                            </li>
+                            <li>
+                                <a href="tv_show.html">...</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="#">All</a>
+                                <a href="celebes.html">All</a>
                             </li>
                             <li>
-                                <a href="#">Actor</a>
+                                <a href="celebes.html">Actor</a>
                             </li>
                             <li>
-                                <a href="#">Director</a>
+                                <a href="celebes.html">Director</a>
                             </li>
                             <li>
-                                <a href="#">Writer</a>
+                                <a href="celebes.html">Writer</a>
                             </li>
                         </ul>
                     </li>
