@@ -1,8 +1,10 @@
 package example;
+import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 @WebService()
 public class MyOntology {
     private static final String namespace = "http://www.semanticweb.org/ontology/SemanticIMDB#";
+    private static final int numPage = 30;
     private static ArrayList<String> lastClicks;
     private static OntModel model;
 
@@ -138,8 +141,8 @@ public class MyOntology {
                         "\t\t?movie my:hasRating ?rating.\n" +
                         "\t}\n" +
                         "\tORDER BY DESC(?rating) ?title\n" +
-                        "\tOFFSET " + page + "\n" +
-                        "\tLIMIT 30";
+                        "\tOFFSET " + (page*this.numPage) + "\n" +
+                        "\tLIMIT "+numPage;
             } else {
                 sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                         "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
@@ -155,8 +158,8 @@ public class MyOntology {
                         "\t\t?movie my:hasRating ?rating.\n" +
                         "\t}\n" +
                         "\tORDER BY DESC(?rating) ?title\n" +
-                        "\tOFFSET " + page + "\n" +
-                        "\tLIMIT 30";
+                        "\tOFFSET " + (page*this.numPage) + "\n" +
+                        "\tLIMIT "+numPage;
             }
 
             Query query = QueryFactory.create(sparqlQuery);
@@ -175,7 +178,7 @@ public class MyOntology {
     }
 
     @WebMethod
-    public ArrayList<String> getListPersonbyKind(String kind, int page) {
+    public ArrayList<String> getListPersonbyKind(String kind, int page, String prefix) {
         ArrayList<String> result = new ArrayList<String>();
         String sparqlQuery;
 
@@ -190,11 +193,15 @@ public class MyOntology {
                     "\tWHERE {\n" +
                     "\t\t?subclasse rdfs:subClassOf my:Person.\n" +
                     "\t\t?person rdf:type ?subclasse.\n" +
-                    "\t\t?person my:hasName ?name\n" +
-                    "\t}\n" +
+                    "\t\t?person my:hasName ?name\n";
+
+            if(!"".equals(prefix))
+                sparqlQuery += "\t\tFILTER(REGEX(STR(?name), \"^"+prefix+"\")).\n";
+
+            sparqlQuery += "\t}\n" +
                     "\tORDER BY ?name\n" +
-                    "\tOFFSET "+page+"\n" +
-                    "\tLIMIT 30";
+                    "\tOFFSET "+(page*this.numPage)+"\n" +
+                    "\tLIMIT "+numPage;
         }
         else {
             sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
@@ -206,11 +213,15 @@ public class MyOntology {
                     "SELECT DISTINCT ?person\n" +
                     "\tWHERE {\n" +
                     "\t\t?person rdf:type my:"+kind+".\n" +
-                    "\t\t?person my:hasName ?name\n" +
-                    "\t}\n" +
+                    "\t\t?person my:hasName ?name\n";
+
+            if(!"".equals(prefix))
+                    sparqlQuery += "\t\tFILTER(REGEX(STR(?name), \"^"+prefix+"\")).\n";
+
+            sparqlQuery += "\t}\n" +
                     "\tORDER BY ?name\n" +
-                    "\tOFFSET "+page+"\n" +
-                    "\tLIMIT 30";
+                    "\tOFFSET "+(page*this.numPage)+"\n" +
+                    "\tLIMIT "+numPage;
         }
 
         Query query = QueryFactory.create(sparqlQuery);
@@ -226,6 +237,63 @@ public class MyOntology {
         qe.close();
 
         return result;
+    }
+
+    @WebMethod
+    public ArrayList<String> getMediaGenre(String localname) {
+        ArrayList<String> result = new ArrayList<String>();
+        String sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+                "\n" +
+                "SELECT ?genre\n" +
+                "\tWHERE {\n" +
+                "\t\tmy:tt0012349 my:hasGenre ?genre.\n" +
+                "\t}";
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("genre");
+            result.add(temp.asNode().getLocalName());
+        }
+
+        qe.close();
+
+        return result;
+    }
+
+    @WebMethod
+    public String getMediaTitle(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasTitle).asLiteral();
+        return literal.getString();
+    }
+
+    @WebMethod
+    public int getMovieDate(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasYear).asLiteral();
+        return literal.getInt();
+    }
+
+    @WebMethod
+    public float getMediaRating(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasRating).asLiteral();
+        return literal.getFloat();
+    }
+
+    @WebMethod
+    public int getMediaRuntime(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasRuntime).asLiteral();
+        return literal.getInt();
     }
 
     @WebMethod

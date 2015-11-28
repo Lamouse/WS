@@ -1,5 +1,13 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
+
+<jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
+<jsp:useBean id="movielist" class="Beans.Movie_List" scope="page"/>
 
 <head>
 
@@ -68,50 +76,53 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#movies"><i class="fa fa-fw fa-arrows-v"></i> Movies <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="movies" class="collapse">
                             <li>
-                                <a href="movie.html">All</a>
+                                <a href="movie.jsp?genre=All&page=0"> All </a>
                             </li>
-                            <li>
-                                <a href="movie.html">Action</a>
-                            </li>
-                            <li>
-                                <a href="movie.html">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="#">...</a>
-                            </li>
+
+                            <%
+                                List<String> temp1 = genrelist.getGenrelist("Movie");
+                                for (int i=0; i<temp1.size() ;i++){
+                            %>
+                                <li>
+                                    <a href=<%= "movie.jsp?genre="+temp1.get(i)+"&page=0"%>> <%= temp1.get(i)%> </a>
+                                </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#tv_shows"><i class="fa fa-fw fa-arrows-v"></i> TV-Shows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="tv_shows" class="collapse">
                             <li>
-                                <a href="tv_show.html">All</a>
+                                <a href="tv_show.jsp?genre=All&page=0"> All </a>
                             </li>
+                            <%
+                                List<String> temp2 = genrelist.getGenrelist("TV_Show");
+                                for (int i=0; i<temp2.size() ;i++){
+                            %>
                             <li>
-                                <a href="tv_show.html">Action</a>
+                                <a href=<%= "tv_show.jsp?genre="+temp2.get(i)+"&page=0"%>> <%= temp2.get(i)%> </a>
                             </li>
-                            <li>
-                                <a href="tv_show.html">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="tv_show.html">...</a>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="celebes.html">All</a>
+                                <a href="celebes.jsp?kind=All&page=0">All</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Actor</a>
+                                <a href="celebes.jsp?kind=Actor&page=0">Actor</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Director</a>
+                                <a href="celebes.jsp?kind=Director&page=0">Director</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Writer</a>
+                                <a href="celebes.jsp?kind=Writer&page=0">Writer</a>
                             </li>
                         </ul>
                     </li>
@@ -125,76 +136,36 @@
             <div class="container-fluid">
 
                 <div class="row">
-                
                     <div class="col-lg-12">
-                    <ul class="pagination">
-                                    <li><a href="#">A</a></li>
-                                    <li><a href="#">B</a></li>
-                                    <li><a href="#">C</a></li>
-                                    <li><a href="#">D</a></li>
-                                    <li><a href="#">E</a></li>  
-                                    <li><a href="#">F</a></li>
-                                    <li><a href="#">G</a></li>
-                                    <li><a href="#">H</a></li>
-                                    <li><a href="#">I</a></li>
-                                    <li><a href="#">J</a></li>
-                                    <li><a href="#">K</a></li>
-                                    <li><a href="#">L</a></li>
-                                    <li><a href="#">M</a></li>
-                                    <li><a href="#">N</a></li>
-                                    <li><a href="#">O</a></li>
-                                    <li><a href="#">P</a></li>
-                                    <li><a href="#">Q</a></li>
-                                    <li><a href="#">R</a></li>
-                                    <li><a href="#">S</a></li>
-                                    <li><a href="#">T</a></li>
-                                    <li><a href="#">U</a></li>
-                                    <li><a href="#">V</a></li>
-                                    <li><a href="#">W</a></li>
-                                    <li><a href="#">X</a></li>
-                                    <li><a href="#">Y</a></li>
-                                    <li><a href="#">Z</a></li>   
-                                </ul>
                         <div class="panel panel-default">
-                        
+                            <% String genre = request.getParameter("genre"); %>
                             <div class="panel-heading">
-                                <h3 class="panel-title">Celebes
-
-                                </h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> <%= "Movie - "+genre%> </h3>
                             </div>
-
                             <div class="panel-body">
                                 <div class="list-group">
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                       Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                       Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
+                                    <%
+                                        String tempMovie;
+                                        String page1 = request.getParameter("page");
+                                        List<String> temp_movieList = movielist.getMovielist(genre, page1);
+                                        for (int i=0; i<temp_movieList.size() ;i++){
+                                            tempMovie = temp_movieList.get(i);
+                                    %>
+                                        <a href="detail_movie.html" class="list-group-item">
+                                            <b> <%= movielist.getTitle(tempMovie)+"("+movielist.getDate(tempMovie)+"), " %> </b>
+                                            <%= "Genre: "+movielist.getGenre(tempMovie)+", " %>
+                                            <%= "Runtime: "+movielist.getRuntime(tempMovie)+"m, "%>
+                                            <%= "Rating: "+movielist.getRating(tempMovie)%>
+                                        </a>
+                                    <%
+                                        }
+                                    %>
                                 </div> 
 
                                 <!--PREVIOUS PAGE ///// NEXT PAGE -->
                                 <div class="row">
-                                  <div class="col-md-8"><a href="#"><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
-                                  <div class="col-md-4"><a href="#">Next page <i class="fa fa-arrow-circle-right"></i></a></div>
+                                  <div class="col-md-8"><a href=<%="movie.jsp?genre="+genre+"&page="+movielist.decPage(page1)%>><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
+                                  <div class="col-md-4"><a href=<%="movie.jsp?genre="+genre+"&page="+movielist.incPage(page1)%>>Next page <i class="fa fa-arrow-circle-right"></i></a></div>
                                 </div>                                                            
                             </div>
                         </div>
