@@ -7,7 +7,7 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
-<jsp:useBean id="movielist" class="Beans.Movie_List" scope="page"/>
+<jsp:useBean id="movielist" class="Beans.Media_List" scope="page"/>
 
 <head>
 
@@ -113,16 +113,16 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="celebes.jsp?kind=All&page=0">All</a>
+                                <a href="celebes.jsp?kind=All&prefix=A&page=0">All</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Actor&page=0">Actor</a>
+                                <a href="celebes.jsp?kind=Actor&prefix=A&page=0">Actor</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Director&page=0">Director</a>
+                                <a href="celebes.jsp?kind=Director&prefix=A&page=0">Director</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Writer&page=0">Writer</a>
+                                <a href="celebes.jsp?kind=Writer&prefix=A&page=0">Writer</a>
                             </li>
                         </ul>
                     </li>
@@ -147,7 +147,7 @@
                                     <%
                                         String tempMovie;
                                         String page1 = request.getParameter("page");
-                                        List<String> temp_movieList = movielist.getMovielist(genre, page1);
+                                        List<String> temp_movieList = movielist.getMovielist("Movie", genre, page1);
                                         for (int i=0; i<temp_movieList.size() ;i++){
                                             tempMovie = temp_movieList.get(i);
                                     %>

@@ -14,6 +14,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @WebService()
@@ -194,14 +195,6 @@ public class MyOntology {
                     "\t\t?subclasse rdfs:subClassOf my:Person.\n" +
                     "\t\t?person rdf:type ?subclasse.\n" +
                     "\t\t?person my:hasName ?name\n";
-
-            if(!"".equals(prefix))
-                sparqlQuery += "\t\tFILTER(REGEX(STR(?name), \"^"+prefix+"\")).\n";
-
-            sparqlQuery += "\t}\n" +
-                    "\tORDER BY ?name\n" +
-                    "\tOFFSET "+(page*this.numPage)+"\n" +
-                    "\tLIMIT "+numPage;
         }
         else {
             sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
@@ -214,15 +207,15 @@ public class MyOntology {
                     "\tWHERE {\n" +
                     "\t\t?person rdf:type my:"+kind+".\n" +
                     "\t\t?person my:hasName ?name\n";
-
-            if(!"".equals(prefix))
-                    sparqlQuery += "\t\tFILTER(REGEX(STR(?name), \"^"+prefix+"\")).\n";
-
-            sparqlQuery += "\t}\n" +
-                    "\tORDER BY ?name\n" +
-                    "\tOFFSET "+(page*this.numPage)+"\n" +
-                    "\tLIMIT "+numPage;
         }
+
+        if(!"".equals(prefix))
+            sparqlQuery += "\t\tFILTER(REGEX(STR(?name), \"^"+prefix+"\")).\n";
+
+        sparqlQuery += "\t}\n" +
+                "\tORDER BY ?name\n" +
+                "\tOFFSET "+(page*numPage)+"\n" +
+                "\tLIMIT "+numPage;
 
         Query query = QueryFactory.create(sparqlQuery);
         QueryExecution qe = QueryExecutionFactory.create(query, model);
@@ -283,6 +276,13 @@ public class MyOntology {
     }
 
     @WebMethod
+    public String getTV_ShowSeasonDate(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasSeasonYears).asLiteral();
+        return literal.getString();
+    }
+
+    @WebMethod
     public float getMediaRating(String localname) {
         Individual individual = model.getIndividual(namespace+localname);
         Literal literal = individual.getPropertyValue(hasRating).asLiteral();
@@ -294,6 +294,39 @@ public class MyOntology {
         Individual individual = model.getIndividual(namespace+localname);
         Literal literal = individual.getPropertyValue(hasRuntime).asLiteral();
         return literal.getInt();
+    }
+
+    @WebMethod
+    public String getPersonName(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasName).asLiteral();
+        return literal.getString();
+    }
+
+    @WebMethod
+    public String getPersonBirthDate(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasBirthDate).asLiteral();
+        return literal.getString();
+    }
+
+    @WebMethod
+    public List<String> getPersonJob(String localname) {
+        List<String> result = new ArrayList<String>();
+
+        Individual individual = model.getIndividual(namespace+localname);
+        RDFNode rdfNode1 = individual.getPropertyValue(isActorIn);
+        RDFNode rdfNode2 = individual.getPropertyValue(isDirectorIn);
+        RDFNode rdfNode3 = individual.getPropertyValue(isWriterIn);
+
+        if(rdfNode1!=null)
+            result.add("Actor");
+        if(rdfNode2!=null)
+            result.add("Director");
+        if(rdfNode3!=null)
+            result.add("Writer");
+
+        return result;
     }
 
     @WebMethod

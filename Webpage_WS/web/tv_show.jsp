@@ -7,6 +7,7 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
+<jsp:useBean id="tvshowlist" class="Beans.Media_List" scope="page"/>
 
 <head>
 
@@ -112,16 +113,16 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="celebes.jsp?kind=All&page=0">All</a>
+                                <a href="celebes.jsp?kind=All&prefix=A&page=0">All</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Actor&page=0">Actor</a>
+                                <a href="celebes.jsp?kind=Actor&prefix=A&page=0">Actor</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Director&page=0">Director</a>
+                                <a href="celebes.jsp?kind=Director&prefix=A&page=0">Director</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Writer&page=0">Writer</a>
+                                <a href="celebes.jsp?kind=Writer&prefix=A&page=0">Writer</a>
                             </li>
                         </ul>
                     </li>
@@ -137,41 +138,34 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
+                            <% String genre = request.getParameter("genre"); %>
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Genre </h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> <%= "TV_Show - "+genre%> </h3>
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                        Type, Title(date), Gener, Rating, Runtime
+                                    <%
+                                        String tempTVShow;
+                                        String page1 = request.getParameter("page");
+                                        List<String> temp_tvshowList = tvshowlist.getMovielist("TV_Show", genre, page1);
+                                        for (int i=0; i<temp_tvshowList.size() ;i++){
+                                            tempTVShow = temp_tvshowList.get(i);
+                                    %>
+                                    <a href="detail_tvshow.html.html" class="list-group-item">
+                                        <b> <%= tvshowlist.getTitle(tempTVShow)+"("+tvshowlist.getSeasonDate(tempTVShow)+"), " %> </b>
+                                        <%= "Genre: "+tvshowlist.getGenre(tempTVShow)+", " %>
+                                        <%= "Runtime: "+tvshowlist.getRuntime(tempTVShow)+"m, "%>
+                                        <%= "Rating: "+tvshowlist.getRating(tempTVShow)%>
                                     </a>
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                       Type, Title(date), Gener, Rating, Runtime
-                                    </a>
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                        Type, Title(date), Gener, Rating, Runtime
-                                    </a>
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                        Type, Title(date), Gener, Rating, Runtime
-                                    </a>
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                        Type, Title(date), Gener, Rating, Runtime
-                                    </a>
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                       Type, Title(date), Gener, Rating, Runtime
-                                    </a>
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                        Type, Title(date), Gener, Rating, Runtime
-                                    </a>
-                                    <a href="detail_tvshow.html" class="list-group-item">
-                                        Type, Title(date), Gener, Rating, Runtime
-                                    </a>
+                                    <%
+                                        }
+                                    %>
                                 </div> 
 
                                 <!--PREVIOUS PAGE ///// NEXT PAGE -->
                                 <div class="row">
-                                  <div class="col-md-8"><a href="#"><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
-                                  <div class="col-md-4"><a href="#">Next page <i class="fa fa-arrow-circle-right"></i></a></div>
+                                    <div class="col-md-8"><a href=<%="tv_show.jsp?genre="+genre+"&page="+tvshowlist.decPage(page1)%>><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
+                                    <div class="col-md-4"><a href=<%="tv_show.jsp?genre="+genre+"&page="+tvshowlist.incPage(page1)%>>Next page <i class="fa fa-arrow-circle-right"></i></a></div>
                                 </div>                                                            
                             </div>
                         </div>

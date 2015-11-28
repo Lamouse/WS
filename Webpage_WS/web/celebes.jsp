@@ -7,6 +7,7 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
+<jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
 
 <head>
 
@@ -112,16 +113,16 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="celebes.jsp?kind=All&page=0">All</a>
+                                <a href="celebes.jsp?kind=All&prefix=A&page=0">All</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Actor&page=0">Actor</a>
+                                <a href="celebes.jsp?kind=Actor&prefix=A&page=0">Actor</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Director&page=0">Director</a>
+                                <a href="celebes.jsp?kind=Director&prefix=A&page=0">Director</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Writer&page=0">Writer</a>
+                                <a href="celebes.jsp?kind=Writer&prefix=A&page=0">Writer</a>
                             </li>
                         </ul>
                     </li>
@@ -135,76 +136,72 @@
             <div class="container-fluid">
 
                 <div class="row">
-                
+                    <%
+                        String kind = request.getParameter("kind");
+                        String page1 = request.getParameter("page");
+                        String prefix = request.getParameter("prefix");
+                    %>
                     <div class="col-lg-12">
-                    <ul class="pagination">
-                                    <li><a href="#">A</a></li>
-                                    <li><a href="#">B</a></li>
-                                    <li><a href="#">C</a></li>
-                                    <li><a href="#">D</a></li>
-                                    <li><a href="#">E</a></li>  
-                                    <li><a href="#">F</a></li>
-                                    <li><a href="#">G</a></li>
-                                    <li><a href="#">H</a></li>
-                                    <li><a href="#">I</a></li>
-                                    <li><a href="#">J</a></li>
-                                    <li><a href="#">K</a></li>
-                                    <li><a href="#">L</a></li>
-                                    <li><a href="#">M</a></li>
-                                    <li><a href="#">N</a></li>
-                                    <li><a href="#">O</a></li>
-                                    <li><a href="#">P</a></li>
-                                    <li><a href="#">Q</a></li>
-                                    <li><a href="#">R</a></li>
-                                    <li><a href="#">S</a></li>
-                                    <li><a href="#">T</a></li>
-                                    <li><a href="#">U</a></li>
-                                    <li><a href="#">V</a></li>
-                                    <li><a href="#">W</a></li>
-                                    <li><a href="#">X</a></li>
-                                    <li><a href="#">Y</a></li>
-                                    <li><a href="#">Z</a></li>   
+                        <center>
+                            <ul class="pagination">
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=A&page=0" %>>A</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=B&page=0" %>>B</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=C&page=0" %>>C</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=D&page=0" %>>D</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=E&page=0" %>>E</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=F&page=0" %>>F</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=G&page=0" %>>G</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=H&page=0" %>>H</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=I&page=0" %>>I</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=J&page=0" %>>J</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=K&page=0" %>>K</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=L&page=0" %>>L</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=M&page=0" %>>M</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=N&page=0" %>>N</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=O&page=0" %>>O</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=P&page=0" %>>P</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=Q&page=0" %>>Q</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=R&page=0" %>>R</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=S&page=0" %>>S</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=T&page=0" %>>T</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=U&page=0" %>>U</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=V&page=0" %>>V</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=W&page=0" %>>W</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=X&page=0" %>>X</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=Y&page=0" %>>Y</a></li>
+                                    <li><a href=<%= "celebes.jsp?kind="+kind+"&prefix=Z&page=0" %>>Z</a></li>
                                 </ul>
+                        </center>
                         <div class="panel panel-default">
                         
                             <div class="panel-heading">
-                                <h3 class="panel-title">Celebes
-
-                                </h3>
+                                <h3 class="panel-title"> <%= "Celebs - "+kind%> </h3>
                             </div>
 
                             <div class="panel-body">
                                 <div class="list-group">
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                       Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                       Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
-                                    <a href="detail_celebs.html" class="list-group-item">
-                                        Type, Name, Jobs, date_year
-                                    </a>
+                                    <%
+                                    String tempPerson;
+                                    List<String> temp_personList = personList.getPersonlist(kind, page1, prefix);
+                                    for (int i=0; i<temp_personList.size() ;i++){
+                                        tempPerson = temp_personList.get(i);
+                                    %>
+
+                                        <a href="detail_celebs.html" class="list-group-item">
+                                            <b><%= personList.getName(tempPerson)+", "%></b>
+                                            <%= "Birth date: "+personList.getBirthDate(tempPerson)+", " %>
+                                            <%= "Jobs: "+personList.getJobs(tempPerson) %>
+                                        </a>
+
+                                    <%
+                                        }
+                                    %>
                                 </div> 
 
                                 <!--PREVIOUS PAGE ///// NEXT PAGE -->
                                 <div class="row">
-                                  <div class="col-md-8"><a href="#"><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
-                                  <div class="col-md-4"><a href="#">Next page <i class="fa fa-arrow-circle-right"></i></a></div>
+                                  <div class="col-md-8"><a href= <%= "celebes.jsp?kind="+kind+"&prefix="+prefix+"&page="+personList.decPage(page1) %>><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
+                                  <div class="col-md-4"><a href= <%= "celebes.jsp?kind="+kind+"&prefix="+prefix+"&page="+personList.incPage(page1) %>>Next page <i class="fa fa-arrow-circle-right"></i></a></div>
                                 </div>                                                            
                             </div>
                         </div>

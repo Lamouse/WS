@@ -114,16 +114,16 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="celebes.jsp?kind=All&page=0">All</a>
+                                <a href="celebes.jsp?kind=All&prefix=A&page=0">All</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Actor&page=0">Actor</a>
+                                <a href="celebes.jsp?kind=Actor&prefix=A&page=0">Actor</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Director&page=0">Director</a>
+                                <a href="celebes.jsp?kind=Director&prefix=A&page=0">Director</a>
                             </li>
                             <li>
-                                <a href="celebes.jsp?kind=Writer&page=0">Writer</a>
+                                <a href="celebes.jsp?kind=Writer&prefix=A&page=0">Writer</a>
                             </li>
                         </ul>
                     </li>
@@ -140,45 +140,43 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Last Clicks </h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Last clicks </h3>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="overflow-y: auto; height:500px ">
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">just now</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Calendar updated
+                                        Arrow
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">4 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> Commented on a post
+                                        Batman
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">23 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> Order 392 shipped
+                                        Taken 3
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">46 minutes ago</span>
-                                        <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+                                        Inception
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">1 hour ago</span>
-                                        <i class="fa fa-fw fa-user"></i> A new user has been added
+                                        Who am i
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">2 hours ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
+                                        Now you see me
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">yesterday</span>
-                                        <i class="fa fa-fw fa-globe"></i> Saved the world
+                                        Taken 2
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">two days ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
+                                        Taxi 2
                                     </a>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="#" class="list-group-item">
+                                        law abiding citizen
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        Friends
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        The Mentalist
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -186,54 +184,7 @@
                 </div>
 
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">just now</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Calendar updated
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">4 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> Commented on a post
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">23 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> Order 392 shipped
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">46 minutes ago</span>
-                                        <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">1 hour ago</span>
-                                        <i class="fa fa-fw fa-user"></i> A new user has been added
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">2 hours ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">yesterday</span>
-                                        <i class="fa fa-fw fa-globe"></i> Saved the world
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">two days ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
-                                    </a>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
             </div>
         </div>
