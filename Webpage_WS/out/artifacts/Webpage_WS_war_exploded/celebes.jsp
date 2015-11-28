@@ -187,7 +187,7 @@
                                         tempPerson = temp_personList.get(i);
                                     %>
 
-                                        <a href="detail_celebs.html" class="list-group-item">
+                                        <a href= <%= "detail_celebs.jsp?celeb="+tempPerson %> class="list-group-item">
                                             <b><%= personList.getName(tempPerson)+", "%></b>
                                             <%= "Birth date: "+personList.getBirthDate(tempPerson)+", " %>
                                             <%= "Jobs: "+personList.getJobs(tempPerson) %>

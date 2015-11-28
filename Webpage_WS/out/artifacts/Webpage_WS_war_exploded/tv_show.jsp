@@ -151,12 +151,12 @@
                                         for (int i=0; i<temp_tvshowList.size() ;i++){
                                             tempTVShow = temp_tvshowList.get(i);
                                     %>
-                                    <a href="detail_tvshow.html.html" class="list-group-item">
-                                        <b> <%= tvshowlist.getTitle(tempTVShow)+"("+tvshowlist.getSeasonDate(tempTVShow)+"), " %> </b>
-                                        <%= "Genre: "+tvshowlist.getGenre(tempTVShow)+", " %>
-                                        <%= "Runtime: "+tvshowlist.getRuntime(tempTVShow)+"m, "%>
-                                        <%= "Rating: "+tvshowlist.getRating(tempTVShow)%>
-                                    </a>
+                                        <a href= <%= "detail_tvshow.jsp?tvshow="+tempTVShow %> class="list-group-item">
+                                            <b> <%= tvshowlist.getTitle(tempTVShow)+"("+tvshowlist.getSeasonDate(tempTVShow)+"), " %> </b>
+                                            <%= "Genre: "+tvshowlist.getGenre(tempTVShow)+", " %>
+                                            <%= "Runtime: "+tvshowlist.getRuntime(tempTVShow)+"m, "%>
+                                            <%= "Rating: "+tvshowlist.getRating(tempTVShow)%>
+                                        </a>
                                     <%
                                         }
                                     %>

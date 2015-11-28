@@ -244,7 +244,8 @@ public class MyOntology {
                 "SELECT ?genre\n" +
                 "\tWHERE {\n" +
                 "\t\tmy:tt0012349 my:hasGenre ?genre.\n" +
-                "\t}";
+                "\t}" +
+                "\tORDER BY ?genre";
 
         Query query = QueryFactory.create(sparqlQuery);
         QueryExecution qe = QueryExecutionFactory.create(query, model);
@@ -253,6 +254,67 @@ public class MyOntology {
         while (results.hasNext()) {
             QuerySolution qs = results.nextSolution();
             RDFNode temp = qs.get("genre");
+            result.add(temp.asNode().getLocalName());
+        }
+
+        qe.close();
+
+        return result;
+    }
+
+    @WebMethod
+    public List<String> getMediaPerson(String kind, String localName) {
+        ArrayList<String> result = new ArrayList<String>();
+        String sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+                "\n" +
+                "SELECT ?person\n" +
+                "\tWHERE {\n" +
+                "\t\tmy:"+localName+" my:has"+kind+" ?person.\n" +
+                "\t}\n" +
+                "\tORDER BY ?person";
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("person");
+            result.add(temp.asNode().getLocalName());
+        }
+
+        qe.close();
+
+        return result;
+    }
+
+    @WebMethod
+    public List<String> getPersonMedia(String kind, String localName) {
+        ArrayList<String> result = new ArrayList<String>();
+        String sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+                "\n" +
+                "SELECT ?media\n" +
+                "\tWHERE {\n" +
+                "\t\tmy:"+localName+" my:is"+kind+"In ?media.\n" +
+                "\t\t?media my:hasTitle ?name.\n" +
+                "\t}\n" +
+                "\tORDER BY ?name";
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("media");
             result.add(temp.asNode().getLocalName());
         }
 
@@ -283,6 +345,13 @@ public class MyOntology {
     }
 
     @WebMethod
+    public int getTVShowNumSeason(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasNumberSeason).asLiteral();
+        return literal.getInt();
+    }
+
+    @WebMethod
     public float getMediaRating(String localname) {
         Individual individual = model.getIndividual(namespace+localname);
         Literal literal = individual.getPropertyValue(hasRating).asLiteral();
@@ -296,6 +365,22 @@ public class MyOntology {
         return literal.getInt();
     }
 
+    @WebMethod
+    public String getMediaPlot(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasPlot).asLiteral();
+        return literal.getString();
+    }
+
+    @WebMethod
+    public String getMediaCover(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasCover).asLiteral();
+        String result = literal.getString();
+        if (result.isEmpty())
+            result = "sorry.jpg";
+        return result;
+    }
     @WebMethod
     public String getPersonName(String localname) {
         Individual individual = model.getIndividual(namespace+localname);
@@ -311,19 +396,33 @@ public class MyOntology {
     }
 
     @WebMethod
+    public String getPersonPhoto(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasPhoto).asLiteral();
+        String result = literal.getString();
+        if (result.isEmpty())
+            result = "sorry.jpg";
+        return result;
+    }
+
+    @WebMethod
+    public String getPersonBiography(String localname) {
+        Individual individual = model.getIndividual(namespace+localname);
+        Literal literal = individual.getPropertyValue(hasBiography).asLiteral();
+        return literal.getString();
+    }
+
+    @WebMethod
     public List<String> getPersonJob(String localname) {
         List<String> result = new ArrayList<String>();
 
         Individual individual = model.getIndividual(namespace+localname);
-        RDFNode rdfNode1 = individual.getPropertyValue(isActorIn);
-        RDFNode rdfNode2 = individual.getPropertyValue(isDirectorIn);
-        RDFNode rdfNode3 = individual.getPropertyValue(isWriterIn);
 
-        if(rdfNode1!=null)
+        if(individual.hasRDFType(actor))
             result.add("Actor");
-        if(rdfNode2!=null)
+        if(individual.hasRDFType(director))
             result.add("Director");
-        if(rdfNode3!=null)
+        if(individual.hasRDFType(writer))
             result.add("Writer");
 
         return result;

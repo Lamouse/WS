@@ -151,7 +151,7 @@
                                         for (int i=0; i<temp_movieList.size() ;i++){
                                             tempMovie = temp_movieList.get(i);
                                     %>
-                                        <a href="detail_movie.html" class="list-group-item">
+                                        <a href=<%= "detail_movie.jsp?movie="+tempMovie %> class="list-group-item">
                                             <b> <%= movielist.getTitle(tempMovie)+"("+movielist.getDate(tempMovie)+"), " %> </b>
                                             <%= "Genre: "+movielist.getGenre(tempMovie)+", " %>
                                             <%= "Runtime: "+movielist.getRuntime(tempMovie)+"m, "%>

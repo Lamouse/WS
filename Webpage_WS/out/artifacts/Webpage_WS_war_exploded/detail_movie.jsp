@@ -1,5 +1,13 @@
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
+
+<jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
+<jsp:useBean id="movieDetails" class="Beans.Media_List" scope="page"/>
+<% String movie = request.getParameter("movie"); %>
 
 <head>
 
@@ -68,50 +76,53 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#movies"><i class="fa fa-fw fa-arrows-v"></i> Movies <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="movies" class="collapse">
                             <li>
-                                <a href="movie.html">All</a>
+                                <a href="movie.jsp?genre=All&page=0"> All </a>
                             </li>
+
+                            <%
+                                List<String> temp1 = genrelist.getGenrelist("Movie");
+                                for (int i=0; i<temp1.size() ;i++){
+                            %>
                             <li>
-                                <a href="movie.html">Action</a>
+                                <a href=<%= "movie.jsp?genre="+temp1.get(i)+"&page=0"%>> <%= temp1.get(i)%> </a>
                             </li>
-                            <li>
-                                <a href="movie.html">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="#">...</a>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#tv_shows"><i class="fa fa-fw fa-arrows-v"></i> TV-Shows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="tv_shows" class="collapse">
                             <li>
-                                <a href="tv_show.html">All</a>
+                                <a href="tv_show.jsp?genre=All&page=0"> All </a>
                             </li>
+                            <%
+                                List<String> temp2 = genrelist.getGenrelist("TV_Show");
+                                for (int i=0; i<temp2.size() ;i++){
+                            %>
                             <li>
-                                <a href="tv_show.html">Action</a>
+                                <a href=<%= "tv_show.jsp?genre="+temp2.get(i)+"&page=0"%>> <%= temp2.get(i)%> </a>
                             </li>
-                            <li>
-                                <a href="tv_show.html">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="tv_show.html">...</a>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="celebes.html">All</a>
+                                <a href="celebes.jsp?kind=All&prefix=A&page=0">All</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Actor</a>
+                                <a href="celebes.jsp?kind=Actor&prefix=A&page=0">Actor</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Director</a>
+                                <a href="celebes.jsp?kind=Director&prefix=A&page=0">Director</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Writer</a>
+                                <a href="celebes.jsp?kind=Writer&prefix=A&page=0">Writer</a>
                             </li>
                         </ul>
                     </li>
@@ -128,39 +139,57 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tv - Show </h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Movie </h3>
                             </div>
                             <div class="panel-body">
                             <table class="table" border="0">
                                 <tr>
                                     <td>
-                                        <img src="batman.jpg" style="width:280px;height:350px;">
+                                        <img src= <%= movieDetails.getCover(movie) %> style="width:280px;height:350px;">
                                     </td>   
                                     <td valign="top">
-                                        <p style="font-size:150%"><b>Title:</b> Arrow (2012 -  )</p>
-                                        <p><b>Genre:</b>   Action, Adventure, Crime</p>
-                                        <p><b>Raiting:</b> 9,4 / 10</p>
-                                        <p><b>Number of seasons:</b>4</p>
-                                        <p><b>Plot:</b> Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow.</p>
-                                        <p name="list_directors"><b>Director:</b> 
+                                        <p style="font-size:150%"><b>Title:</b> <%= movieDetails.getTitle(movie)+"("+movieDetails.getDate(movie)+")" %></p>
+                                        <p><b>Genre:</b> <%= movieDetails.getGenre(movie)%> </p>
+                                        <p><b>Rating:</b> <%= movieDetails.getRating(movie) %> / 10</p>
+                                        <p><b>Plot:</b> <%= movieDetails.getPlot(movie) %> </p>
+                                        <p name="list_directors"><b>Director:</b>
                                             <ul>
-                                            <a href="#"><li>Zack Snyder</li></a>                                            
+                                            <%
+                                                String temp_celeb;
+                                                List<String> director_list = movieDetails.getPerson("Director", movie);
+                                                for(int i=0; i<director_list.size(); i++) {
+                                                    temp_celeb = director_list.get(i);
+                                            %>
+                                                    <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= movieDetails.getPersonName(temp_celeb) %></li></a>
+                                            <%
+                                                }
+                                            %>
                                             </ul>
                                         </p>
-                                        <p name="list_writers"><b>Writers:</b> 
-                                            <ul> 
-                                            <a href="#"><li>Chris Terrio</li></a>
-                                            <a href="#"><li>David S. Goyer</li></a>                                         
+                                        <p name="list_writers"><b>Writer:</b>
+                                            <ul>
+                                            <%
+                                                List<String> writer_list = movieDetails.getPerson("Writer", movie);
+                                                for(int i=0; i<writer_list.size(); i++) {
+                                                    temp_celeb = writer_list.get(i);
+                                            %>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= movieDetails.getPersonName(temp_celeb) %></li></a>
+                                            <%
+                                                }
+                                            %>
                                             </ul>
                                         </p>
-                                        <p name="list_actors"><b>Actors:</b> 
-                                            <ul> 
-                                            <a href="#"><li>Jeffrey Dean Morgan</li></a>
-                                            <a href="#"><li>Henry Cavill</li></a>
-                                            <a href="#"><li>Jena Malone</li></a>
-                                            <a href="#"><li>Jason Momoa</li></a>                                           
-                                            <a href="#"><li>Gal Gadot</li></a>
-                                            <a href="#"><li>Ben Affleck</li></a>
+                                        <p name="list_actors"><b>Actor:</b>
+                                            <ul>
+                                            <%
+                                                List<String> actor_list = movieDetails.getPerson("Actor", movie);
+                                                for(int i=0; i<actor_list.size(); i++) {
+                                                    temp_celeb = actor_list.get(i);
+                                            %>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= movieDetails.getPersonName(temp_celeb) %></li></a>
+                                            <%
+                                                }
+                                            %>
                                             </ul>
                                         </p>
                                     </td>   
@@ -168,10 +197,10 @@
                                         
                                     </td>                              
                                 </tr>
-                            </table>   
+                            </table>    
                               <div class="row">
-                                    <div class="col-md-8"><a href="tv_show.html"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
-                                </div>                                               
+                                    <div class="col-md-8"><a href="javascript:javascript:history.go(-1)"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
+                                </div>                                              
                                                                                                                          
                             </div>
                         </div>

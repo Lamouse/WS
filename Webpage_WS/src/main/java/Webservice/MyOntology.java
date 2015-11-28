@@ -28,50 +28,17 @@ public interface MyOntology {
     /**
      * 
      * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "addIemToLastClicks", targetNamespace = "http://example/", className = "Webservice.AddIemToLastClicks")
-    @ResponseWrapper(localName = "addIemToLastClicksResponse", targetNamespace = "http://example/", className = "Webservice.AddIemToLastClicksResponse")
-    @Action(input = "http://example/MyOntology/addIemToLastClicksRequest", output = "http://example/MyOntology/addIemToLastClicksResponse")
-    public void addIemToLastClicks(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
      * @return
-     *     returns java.util.List<java.lang.String>
+     *     returns int
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getListOfGenresIn", targetNamespace = "http://example/", className = "Webservice.GetListOfGenresIn")
-    @ResponseWrapper(localName = "getListOfGenresInResponse", targetNamespace = "http://example/", className = "Webservice.GetListOfGenresInResponse")
-    @Action(input = "http://example/MyOntology/getListOfGenresInRequest", output = "http://example/MyOntology/getListOfGenresInResponse")
-    public List<String> getListOfGenresIn(
+    @RequestWrapper(localName = "getTVShowNumSeason", targetNamespace = "http://example/", className = "Webservice.GetTVShowNumSeason")
+    @ResponseWrapper(localName = "getTVShowNumSeasonResponse", targetNamespace = "http://example/", className = "Webservice.GetTVShowNumSeasonResponse")
+    @Action(input = "http://example/MyOntology/getTVShowNumSeasonRequest", output = "http://example/MyOntology/getTVShowNumSeasonResponse")
+    public int getTVShowNumSeason(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
-
-    /**
-     * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns java.util.List<java.lang.String>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getListPersonbyKind", targetNamespace = "http://example/", className = "Webservice.GetListPersonbyKind")
-    @ResponseWrapper(localName = "getListPersonbyKindResponse", targetNamespace = "http://example/", className = "Webservice.GetListPersonbyKindResponse")
-    @Action(input = "http://example/MyOntology/getListPersonbyKindRequest", output = "http://example/MyOntology/getListPersonbyKindResponse")
-    public List<String> getListPersonbyKind(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        int arg1,
-        @WebParam(name = "arg2", targetNamespace = "")
-        String arg2);
 
     /**
      * 
@@ -94,12 +61,24 @@ public interface MyOntology {
      * @return
      *     returns java.lang.String
      */
-    @WebMethod(operationName = "getTV_ShowSeasonDate")
+    @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getTV_ShowSeasonDate", targetNamespace = "http://example/", className = "Webservice.GetTVShowSeasonDate")
-    @ResponseWrapper(localName = "getTV_ShowSeasonDateResponse", targetNamespace = "http://example/", className = "Webservice.GetTVShowSeasonDateResponse")
-    @Action(input = "http://example/MyOntology/getTV_ShowSeasonDateRequest", output = "http://example/MyOntology/getTV_ShowSeasonDateResponse")
-    public String getTVShowSeasonDate(
+    @RequestWrapper(localName = "getPersonBiography", targetNamespace = "http://example/", className = "Webservice.GetPersonBiography")
+    @ResponseWrapper(localName = "getPersonBiographyResponse", targetNamespace = "http://example/", className = "Webservice.GetPersonBiographyResponse")
+    @Action(input = "http://example/MyOntology/getPersonBiographyRequest", output = "http://example/MyOntology/getPersonBiographyResponse")
+    public String getPersonBiography(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "addIemToLastClicks", targetNamespace = "http://example/", className = "Webservice.AddIemToLastClicks")
+    @ResponseWrapper(localName = "addIemToLastClicksResponse", targetNamespace = "http://example/", className = "Webservice.AddIemToLastClicksResponse")
+    @Action(input = "http://example/MyOntology/addIemToLastClicksRequest", output = "http://example/MyOntology/addIemToLastClicksResponse")
+    public void addIemToLastClicks(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -126,16 +105,37 @@ public interface MyOntology {
 
     /**
      * 
+     * @param arg2
+     * @param arg1
      * @param arg0
      * @return
-     *     returns float
+     *     returns java.util.List<java.lang.String>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getMediaRating", targetNamespace = "http://example/", className = "Webservice.GetMediaRating")
-    @ResponseWrapper(localName = "getMediaRatingResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaRatingResponse")
-    @Action(input = "http://example/MyOntology/getMediaRatingRequest", output = "http://example/MyOntology/getMediaRatingResponse")
-    public float getMediaRating(
+    @RequestWrapper(localName = "getListPersonbyKind", targetNamespace = "http://example/", className = "Webservice.GetListPersonbyKind")
+    @ResponseWrapper(localName = "getListPersonbyKindResponse", targetNamespace = "http://example/", className = "Webservice.GetListPersonbyKindResponse")
+    @Action(input = "http://example/MyOntology/getListPersonbyKindRequest", output = "http://example/MyOntology/getListPersonbyKindResponse")
+    public List<String> getListPersonbyKind(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        int arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getListOfGenresIn", targetNamespace = "http://example/", className = "Webservice.GetListOfGenresIn")
+    @ResponseWrapper(localName = "getListOfGenresInResponse", targetNamespace = "http://example/", className = "Webservice.GetListOfGenresInResponse")
+    @Action(input = "http://example/MyOntology/getListOfGenresInRequest", output = "http://example/MyOntology/getListOfGenresInResponse")
+    public List<String> getListOfGenresIn(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -143,14 +143,47 @@ public interface MyOntology {
      * 
      * @param arg0
      * @return
-     *     returns int
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "getTV_ShowSeasonDate")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getTV_ShowSeasonDate", targetNamespace = "http://example/", className = "Webservice.GetTVShowSeasonDate")
+    @ResponseWrapper(localName = "getTV_ShowSeasonDateResponse", targetNamespace = "http://example/", className = "Webservice.GetTVShowSeasonDateResponse")
+    @Action(input = "http://example/MyOntology/getTV_ShowSeasonDateRequest", output = "http://example/MyOntology/getTV_ShowSeasonDateResponse")
+    public String getTVShowSeasonDate(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.String>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getMediaRuntime", targetNamespace = "http://example/", className = "Webservice.GetMediaRuntime")
-    @ResponseWrapper(localName = "getMediaRuntimeResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaRuntimeResponse")
-    @Action(input = "http://example/MyOntology/getMediaRuntimeRequest", output = "http://example/MyOntology/getMediaRuntimeResponse")
-    public int getMediaRuntime(
+    @RequestWrapper(localName = "getPersonMedia", targetNamespace = "http://example/", className = "Webservice.GetPersonMedia")
+    @ResponseWrapper(localName = "getPersonMediaResponse", targetNamespace = "http://example/", className = "Webservice.GetPersonMediaResponse")
+    @Action(input = "http://example/MyOntology/getPersonMediaRequest", output = "http://example/MyOntology/getPersonMediaResponse")
+    public List<String> getPersonMedia(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getPersonPhoto", targetNamespace = "http://example/", className = "Webservice.GetPersonPhoto")
+    @ResponseWrapper(localName = "getPersonPhotoResponse", targetNamespace = "http://example/", className = "Webservice.GetPersonPhotoResponse")
+    @Action(input = "http://example/MyOntology/getPersonPhotoRequest", output = "http://example/MyOntology/getPersonPhotoResponse")
+    public String getPersonPhoto(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -162,10 +195,73 @@ public interface MyOntology {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getPersonName", targetNamespace = "http://example/", className = "Webservice.GetPersonName")
-    @ResponseWrapper(localName = "getPersonNameResponse", targetNamespace = "http://example/", className = "Webservice.GetPersonNameResponse")
-    @Action(input = "http://example/MyOntology/getPersonNameRequest", output = "http://example/MyOntology/getPersonNameResponse")
-    public String getPersonName(
+    @RequestWrapper(localName = "getMediaPlot", targetNamespace = "http://example/", className = "Webservice.GetMediaPlot")
+    @ResponseWrapper(localName = "getMediaPlotResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaPlotResponse")
+    @Action(input = "http://example/MyOntology/getMediaPlotRequest", output = "http://example/MyOntology/getMediaPlotResponse")
+    public String getMediaPlot(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getMediaTitle", targetNamespace = "http://example/", className = "Webservice.GetMediaTitle")
+    @ResponseWrapper(localName = "getMediaTitleResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaTitleResponse")
+    @Action(input = "http://example/MyOntology/getMediaTitleRequest", output = "http://example/MyOntology/getMediaTitleResponse")
+    public String getMediaTitle(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getMediaPerson", targetNamespace = "http://example/", className = "Webservice.GetMediaPerson")
+    @ResponseWrapper(localName = "getMediaPersonResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaPersonResponse")
+    @Action(input = "http://example/MyOntology/getMediaPersonRequest", output = "http://example/MyOntology/getMediaPersonResponse")
+    public List<String> getMediaPerson(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns int
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getMovieDate", targetNamespace = "http://example/", className = "Webservice.GetMovieDate")
+    @ResponseWrapper(localName = "getMovieDateResponse", targetNamespace = "http://example/", className = "Webservice.GetMovieDateResponse")
+    @Action(input = "http://example/MyOntology/getMovieDateRequest", output = "http://example/MyOntology/getMovieDateResponse")
+    public int getMovieDate(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getMediaGenre", targetNamespace = "http://example/", className = "Webservice.GetMediaGenre")
+    @ResponseWrapper(localName = "getMediaGenreResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaGenreResponse")
+    @Action(input = "http://example/MyOntology/getMediaGenreRequest", output = "http://example/MyOntology/getMediaGenreResponse")
+    public List<String> getMediaGenre(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -192,10 +288,10 @@ public interface MyOntology {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getMediaTitle", targetNamespace = "http://example/", className = "Webservice.GetMediaTitle")
-    @ResponseWrapper(localName = "getMediaTitleResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaTitleResponse")
-    @Action(input = "http://example/MyOntology/getMediaTitleRequest", output = "http://example/MyOntology/getMediaTitleResponse")
-    public String getMediaTitle(
+    @RequestWrapper(localName = "getMediaCover", targetNamespace = "http://example/", className = "Webservice.GetMediaCover")
+    @ResponseWrapper(localName = "getMediaCoverResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaCoverResponse")
+    @Action(input = "http://example/MyOntology/getMediaCoverRequest", output = "http://example/MyOntology/getMediaCoverResponse")
+    public String getMediaCover(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -203,14 +299,29 @@ public interface MyOntology {
      * 
      * @param arg0
      * @return
-     *     returns int
+     *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getMovieDate", targetNamespace = "http://example/", className = "Webservice.GetMovieDate")
-    @ResponseWrapper(localName = "getMovieDateResponse", targetNamespace = "http://example/", className = "Webservice.GetMovieDateResponse")
-    @Action(input = "http://example/MyOntology/getMovieDateRequest", output = "http://example/MyOntology/getMovieDateResponse")
-    public int getMovieDate(
+    @RequestWrapper(localName = "getPersonName", targetNamespace = "http://example/", className = "Webservice.GetPersonName")
+    @ResponseWrapper(localName = "getPersonNameResponse", targetNamespace = "http://example/", className = "Webservice.GetPersonNameResponse")
+    @Action(input = "http://example/MyOntology/getPersonNameRequest", output = "http://example/MyOntology/getPersonNameResponse")
+    public String getPersonName(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns float
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getMediaRating", targetNamespace = "http://example/", className = "Webservice.GetMediaRating")
+    @ResponseWrapper(localName = "getMediaRatingResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaRatingResponse")
+    @Action(input = "http://example/MyOntology/getMediaRatingRequest", output = "http://example/MyOntology/getMediaRatingResponse")
+    public float getMediaRating(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -230,14 +341,14 @@ public interface MyOntology {
      * 
      * @param arg0
      * @return
-     *     returns java.util.List<java.lang.String>
+     *     returns int
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getMediaGenre", targetNamespace = "http://example/", className = "Webservice.GetMediaGenre")
-    @ResponseWrapper(localName = "getMediaGenreResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaGenreResponse")
-    @Action(input = "http://example/MyOntology/getMediaGenreRequest", output = "http://example/MyOntology/getMediaGenreResponse")
-    public List<String> getMediaGenre(
+    @RequestWrapper(localName = "getMediaRuntime", targetNamespace = "http://example/", className = "Webservice.GetMediaRuntime")
+    @ResponseWrapper(localName = "getMediaRuntimeResponse", targetNamespace = "http://example/", className = "Webservice.GetMediaRuntimeResponse")
+    @Action(input = "http://example/MyOntology/getMediaRuntimeRequest", output = "http://example/MyOntology/getMediaRuntimeResponse")
+    public int getMediaRuntime(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 

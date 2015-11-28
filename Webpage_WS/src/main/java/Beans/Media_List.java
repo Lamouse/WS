@@ -83,4 +83,39 @@ public class Media_List {
         }
         return page1;
     }
+
+    public String getCover(String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        String result = proxy.getMediaCover(localName);
+        return result;
+    }
+
+    public String getPlot(String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        String result = proxy.getMediaPlot(localName);
+        return result;
+    }
+
+    public String getPersonName(String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        String result = proxy.getPersonName(localName);
+        return result;
+    }
+
+    public List<String> getPerson(String kind, String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        List<String> result = proxy.getMediaPerson(kind, localName);
+        return result;
+    }
+
+    public int getNumSeason(String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        int result = proxy.getTVShowNumSeason(localName);
+        return result;
+    }
 }

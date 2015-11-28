@@ -59,4 +59,37 @@ public class Person_List {
         }
         return page1;
     }
+
+    public String getPhoto(String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        return proxy.getPersonPhoto(localName);
+    }
+
+    public String getBiography(String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        return proxy.getPersonBiography(localName);
+
+    }
+
+    public List<String> getMedia(String kind, String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        List<String> result = proxy.getPersonMedia(kind, localName);
+        return result;
+    }
+
+    public String getMediaName(String localName) {
+        MyOntologyService service = new MyOntologyService();
+        MyOntology proxy = service.getMyOntologyPort();
+        String result = proxy.getMediaTitle(localName);
+        return result;
+    }
+
+    public String getPageLink(String localName) {
+        if(localName.startsWith("tt"))
+            return "detail_movie.jsp?movie=";
+        return "detail_tvshow.jsp?tvshow=";
+    }
 }

@@ -1,5 +1,13 @@
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
+
+<jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
+<jsp:useBean id="personDetails" class="Beans.Person_List" scope="page"/>
+<% String person = request.getParameter("celeb"); %>
 
 <head>
 
@@ -68,50 +76,53 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#movies"><i class="fa fa-fw fa-arrows-v"></i> Movies <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="movies" class="collapse">
                             <li>
-                                <a href="movie.html">All</a>
+                                <a href="movie.jsp?genre=All&page=0"> All </a>
                             </li>
+
+                            <%
+                                List<String> temp1 = genrelist.getGenrelist("Movie");
+                                for (int i=0; i<temp1.size() ;i++){
+                            %>
                             <li>
-                                <a href="movie.html">Action</a>
+                                <a href=<%= "movie.jsp?genre="+temp1.get(i)+"&page=0"%>> <%= temp1.get(i)%> </a>
                             </li>
-                            <li>
-                                <a href="movie.html">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="#">...</a>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#tv_shows"><i class="fa fa-fw fa-arrows-v"></i> TV-Shows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="tv_shows" class="collapse">
                             <li>
-                                <a href="tv_show.html">All</a>
+                                <a href="tv_show.jsp?genre=All&page=0"> All </a>
                             </li>
+                            <%
+                                List<String> temp2 = genrelist.getGenrelist("TV_Show");
+                                for (int i=0; i<temp2.size() ;i++){
+                            %>
                             <li>
-                                <a href="tv_show.html">Action</a>
+                                <a href=<%= "tv_show.jsp?genre="+temp2.get(i)+"&page=0"%>> <%= temp2.get(i)%> </a>
                             </li>
-                            <li>
-                                <a href="tv_show.html">Adventure</a>
-                            </li>
-                            <li>
-                                <a href="tv_show.html">...</a>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#celebs"><i class="fa fa-fw fa-arrows-v"></i> Celebs <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="celebs" class="collapse">
                             <li>
-                                <a href="celebes.html">All</a>
+                                <a href="celebes.jsp?kind=All&prefix=A&page=0">All</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Actor</a>
+                                <a href="celebes.jsp?kind=Actor&prefix=A&page=0">Actor</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Director</a>
+                                <a href="celebes.jsp?kind=Director&prefix=A&page=0">Director</a>
                             </li>
                             <li>
-                                <a href="celebes.html">Writer</a>
+                                <a href="celebes.jsp?kind=Writer&prefix=A&page=0">Writer</a>
                             </li>
                         </ul>
                     </li>
@@ -134,39 +145,52 @@
                             <table class="table" border="0">
                                 <tr>
                                     <td>
-                                        <img src="photo.jpg" style="width:280px;height:350px;">
+                                        <img src= <%= personDetails.getPhoto(person) %> style="width:280px;height:350px;">
                                     </td>   
                                     <td valign="top">
-                                        <p style="font-size:150%"><b>Name: </b> Greg Berlanti</p>
-                                        <p style="font-size:100%">Producer | Writer | Director</p>
+                                        <p style="font-size:150%"><b>Name: </b> <%= personDetails.getName(person) %> </p>
+                                        <p style="font-size:100%"> <%= personDetails.getJobs(person) %> </p>
 
-                                        <p><b>Born: </b> May 24, 1972</p>
-                                        <p><b>Plot:</b>WGA, DGA and Golden Globe nominated writer, director, and producer, Greg Berlanti, is the force behind several of the most inventive and acclaimed works of film and television.
-
-He is the writer, director and producer behind several of the most creative and lauded television series, including ABC's "Brothers and Sister," "Eli Stone" (for which he was nominated for a WGA Award) and "Political Animals," the USA Network mini-series (for which he was nominated for a WGA, DGA and Golden Globe award). Berlanti started in television as a writer and executive producer on "Dawson's Creek" before going to to create and executive produce two of the WB's most critically acclaimed dramas - "Everwood" and "Jack & Bobby."
-
-Berlanti co-wrote and produced the Warern Bros. action film, "Green Lantern." He also directed "Life As We Know It," starring Katherine Heigl and Josh Duhamel, which grossed over $100m worldwide. In 2000, Berlanti made his film directorial debut with "The Broken Hearts Club."
-
-In 2013, he is Executive Producing both "Arrow," for the CW and "Golden Boy," for CBS and working on "The Tomorrow People," a new pilot for the CW.</p>
-                                        <p name="list_of_media_actor"><b> list of media actor in</b> 
+                                        <p><b>Born: </b> <%= personDetails.getBirthDate(person) %> </p>
+                                        <p><b>Biography:</b> <%= personDetails.getBiography(person) %></p>
+                                        <p name="list_of_media_director"><b> Director of: </b>
                                             <ul>
-                                            <a href="#"><li>Legends of Tomorrow</li></a>  
-                                            <a href="#"><li>Arrow</li></a>  
-                                            <a href="#"><li>The Flash</li></a>                                            
+                                                <%
+                                                    String temp_media;
+                                                    List<String> director_list = personDetails.getMedia("Director", person);
+                                                    for(int i=0; i<director_list.size(); i++) {
+                                                        temp_media = director_list.get(i);
+                                                %>p
+                                                    <a href= <%= personDetails.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                <%
+                                                    }
+                                                %>
                                             </ul>
                                         </p>
-                                        <p name="list_of_media_director"><b>list of media director in</b> 
-                                            <ul> 
-                                            <a href="#"><li>Political Animals</li></a>                                    
+                                        <p name="list_of_media_writer"><b> Writer of: </b>
+                                            <ul>
+                                            <%
+                                                List<String> writer_list = personDetails.getMedia("Writer", person);
+                                                for(int i=0; i<writer_list.size(); i++) {
+                                                    temp_media = writer_list.get(i);
+                                            %>
+                                            <a href= <%= personDetails.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                            <%
+                                                }
+                                            %>
                                             </ul>
                                         </p>
-                                        <p name="list_of_media_writer"><b>list of media writer in</b> 
-                                            <ul> 
-                                            
-                                            <a href="#"><li>Legends of Tomorrow</li></a>  
-                                            <a href="#"><li>Arrow</li></a>  
-                                            <a href="#"><li>The Flash</li></a    
-                                            
+                                        <p name="list_of_media_actor"><b> Actor in: </b>
+                                            <ul>
+                                            <%
+                                                List<String> actor_list = personDetails.getMedia("Actor", person);
+                                                for(int i=0; i<actor_list.size(); i++) {
+                                                    temp_media = actor_list.get(i);
+                                            %>
+                                            <a href= <%= personDetails.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                            <%
+                                                }
+                                            %>
                                             </ul>
                                         </p>
                                     </td>   
@@ -177,7 +201,7 @@ In 2013, he is Executive Producing both "Arrow," for the CW and "Golden Boy," fo
                             </table>   
 
                               <div class="row">
-                                    <div class="col-md-8"><a href="celebes.html"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
+                                    <div class="col-md-8"><a href="javascript:javascript:history.go(-1)"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
                                 </div>                                               
                                                                                                                          
                             </div>

@@ -27,10 +27,15 @@ public class ObjectFactory {
     private final static QName _GetMediaRuntime_QNAME = new QName("http://example/", "getMediaRuntime");
     private final static QName _GetMediaRuntimeResponse_QNAME = new QName("http://example/", "getMediaRuntimeResponse");
     private final static QName _GetPersonName_QNAME = new QName("http://example/", "getPersonName");
+    private final static QName _GetMediaPersonResponse_QNAME = new QName("http://example/", "getMediaPersonResponse");
+    private final static QName _GetMediaPlotResponse_QNAME = new QName("http://example/", "getMediaPlotResponse");
+    private final static QName _GetPersonBiographyResponse_QNAME = new QName("http://example/", "getPersonBiographyResponse");
     private final static QName _GetMediaRatingResponse_QNAME = new QName("http://example/", "getMediaRatingResponse");
     private final static QName _GetTVShowSeasonDate_QNAME = new QName("http://example/", "getTV_ShowSeasonDate");
+    private final static QName _GetTVShowNumSeasonResponse_QNAME = new QName("http://example/", "getTVShowNumSeasonResponse");
     private final static QName _GetMediaTitle_QNAME = new QName("http://example/", "getMediaTitle");
     private final static QName _GetLastClicks_QNAME = new QName("http://example/", "getLastClicks");
+    private final static QName _GetMediaCoverResponse_QNAME = new QName("http://example/", "getMediaCoverResponse");
     private final static QName _AddIemToLastClicks_QNAME = new QName("http://example/", "addIemToLastClicks");
     private final static QName _GetTVShowSeasonDateResponse_QNAME = new QName("http://example/", "getTV_ShowSeasonDateResponse");
     private final static QName _GetMediaRating_QNAME = new QName("http://example/", "getMediaRating");
@@ -41,16 +46,25 @@ public class ObjectFactory {
     private final static QName _GetListOfGenresInResponse_QNAME = new QName("http://example/", "getListOfGenresInResponse");
     private final static QName _GetListPersonbyKindResponse_QNAME = new QName("http://example/", "getListPersonbyKindResponse");
     private final static QName _GetMovieDate_QNAME = new QName("http://example/", "getMovieDate");
+    private final static QName _GetPersonPhotoResponse_QNAME = new QName("http://example/", "getPersonPhotoResponse");
     private final static QName _GetLastClicksResponse_QNAME = new QName("http://example/", "getLastClicksResponse");
     private final static QName _GetMediaTitleResponse_QNAME = new QName("http://example/", "getMediaTitleResponse");
+    private final static QName _GetPersonBiography_QNAME = new QName("http://example/", "getPersonBiography");
+    private final static QName _GetPersonMediaResponse_QNAME = new QName("http://example/", "getPersonMediaResponse");
     private final static QName _GetMediaGenreResponse_QNAME = new QName("http://example/", "getMediaGenreResponse");
     private final static QName _GetListMediabyGenre_QNAME = new QName("http://example/", "getListMediabyGenre");
+    private final static QName _GetMediaPlot_QNAME = new QName("http://example/", "getMediaPlot");
+    private final static QName _GetMediaPerson_QNAME = new QName("http://example/", "getMediaPerson");
     private final static QName _GetMovieDateResponse_QNAME = new QName("http://example/", "getMovieDateResponse");
+    private final static QName _GetPersonMedia_QNAME = new QName("http://example/", "getPersonMedia");
     private final static QName _GetPersonJob_QNAME = new QName("http://example/", "getPersonJob");
     private final static QName _GetListOfGenresIn_QNAME = new QName("http://example/", "getListOfGenresIn");
     private final static QName _GetPersonBirthDateResponse_QNAME = new QName("http://example/", "getPersonBirthDateResponse");
     private final static QName _GetMediaGenre_QNAME = new QName("http://example/", "getMediaGenre");
     private final static QName _GetListPersonbyKind_QNAME = new QName("http://example/", "getListPersonbyKind");
+    private final static QName _GetPersonPhoto_QNAME = new QName("http://example/", "getPersonPhoto");
+    private final static QName _GetTVShowNumSeason_QNAME = new QName("http://example/", "getTVShowNumSeason");
+    private final static QName _GetMediaCover_QNAME = new QName("http://example/", "getMediaCover");
     private final static QName _AddIemToLastClicksResponse_QNAME = new QName("http://example/", "addIemToLastClicksResponse");
 
     /**
@@ -58,6 +72,30 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link GetMediaPersonResponse }
+     * 
+     */
+    public GetMediaPersonResponse createGetMediaPersonResponse() {
+        return new GetMediaPersonResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetMediaPlotResponse }
+     * 
+     */
+    public GetMediaPlotResponse createGetMediaPlotResponse() {
+        return new GetMediaPlotResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetPersonBiographyResponse }
+     * 
+     */
+    public GetPersonBiographyResponse createGetPersonBiographyResponse() {
+        return new GetPersonBiographyResponse();
     }
 
     /**
@@ -85,6 +123,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetTVShowNumSeasonResponse }
+     * 
+     */
+    public GetTVShowNumSeasonResponse createGetTVShowNumSeasonResponse() {
+        return new GetTVShowNumSeasonResponse();
+    }
+
+    /**
      * Create an instance of {@link GetMediaTitle }
      * 
      */
@@ -98,6 +144,14 @@ public class ObjectFactory {
      */
     public GetLastClicks createGetLastClicks() {
         return new GetLastClicks();
+    }
+
+    /**
+     * Create an instance of {@link GetMediaCoverResponse }
+     * 
+     */
+    public GetMediaCoverResponse createGetMediaCoverResponse() {
+        return new GetMediaCoverResponse();
     }
 
     /**
@@ -197,6 +251,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetPersonBiography }
+     * 
+     */
+    public GetPersonBiography createGetPersonBiography() {
+        return new GetPersonBiography();
+    }
+
+    /**
+     * Create an instance of {@link GetPersonMediaResponse }
+     * 
+     */
+    public GetPersonMediaResponse createGetPersonMediaResponse() {
+        return new GetPersonMediaResponse();
+    }
+
+    /**
      * Create an instance of {@link GetListPersonbyKindResponse }
      * 
      */
@@ -213,11 +283,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetPersonPhotoResponse }
+     * 
+     */
+    public GetPersonPhotoResponse createGetPersonPhotoResponse() {
+        return new GetPersonPhotoResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetMediaPerson }
+     * 
+     */
+    public GetMediaPerson createGetMediaPerson() {
+        return new GetMediaPerson();
+    }
+
+    /**
      * Create an instance of {@link GetMovieDateResponse }
      * 
      */
     public GetMovieDateResponse createGetMovieDateResponse() {
         return new GetMovieDateResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetPersonMedia }
+     * 
+     */
+    public GetPersonMedia createGetPersonMedia() {
+        return new GetPersonMedia();
     }
 
     /**
@@ -234,6 +328,14 @@ public class ObjectFactory {
      */
     public GetListMediabyGenre createGetListMediabyGenre() {
         return new GetListMediabyGenre();
+    }
+
+    /**
+     * Create an instance of {@link GetMediaPlot }
+     * 
+     */
+    public GetMediaPlot createGetMediaPlot() {
+        return new GetMediaPlot();
     }
 
     /**
@@ -266,6 +368,30 @@ public class ObjectFactory {
      */
     public GetPersonBirthDateResponse createGetPersonBirthDateResponse() {
         return new GetPersonBirthDateResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetPersonPhoto }
+     * 
+     */
+    public GetPersonPhoto createGetPersonPhoto() {
+        return new GetPersonPhoto();
+    }
+
+    /**
+     * Create an instance of {@link GetTVShowNumSeason }
+     * 
+     */
+    public GetTVShowNumSeason createGetTVShowNumSeason() {
+        return new GetTVShowNumSeason();
+    }
+
+    /**
+     * Create an instance of {@link GetMediaCover }
+     * 
+     */
+    public GetMediaCover createGetMediaCover() {
+        return new GetMediaCover();
     }
 
     /**
@@ -312,6 +438,33 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaPersonResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getMediaPersonResponse")
+    public JAXBElement<GetMediaPersonResponse> createGetMediaPersonResponse(GetMediaPersonResponse value) {
+        return new JAXBElement<GetMediaPersonResponse>(_GetMediaPersonResponse_QNAME, GetMediaPersonResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaPlotResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getMediaPlotResponse")
+    public JAXBElement<GetMediaPlotResponse> createGetMediaPlotResponse(GetMediaPlotResponse value) {
+        return new JAXBElement<GetMediaPlotResponse>(_GetMediaPlotResponse_QNAME, GetMediaPlotResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonBiographyResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getPersonBiographyResponse")
+    public JAXBElement<GetPersonBiographyResponse> createGetPersonBiographyResponse(GetPersonBiographyResponse value) {
+        return new JAXBElement<GetPersonBiographyResponse>(_GetPersonBiographyResponse_QNAME, GetPersonBiographyResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaRatingResponse }{@code >}}
      * 
      */
@@ -330,6 +483,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTVShowNumSeasonResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getTVShowNumSeasonResponse")
+    public JAXBElement<GetTVShowNumSeasonResponse> createGetTVShowNumSeasonResponse(GetTVShowNumSeasonResponse value) {
+        return new JAXBElement<GetTVShowNumSeasonResponse>(_GetTVShowNumSeasonResponse_QNAME, GetTVShowNumSeasonResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaTitle }{@code >}}
      * 
      */
@@ -345,6 +507,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://example/", name = "getLastClicks")
     public JAXBElement<GetLastClicks> createGetLastClicks(GetLastClicks value) {
         return new JAXBElement<GetLastClicks>(_GetLastClicks_QNAME, GetLastClicks.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaCoverResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getMediaCoverResponse")
+    public JAXBElement<GetMediaCoverResponse> createGetMediaCoverResponse(GetMediaCoverResponse value) {
+        return new JAXBElement<GetMediaCoverResponse>(_GetMediaCoverResponse_QNAME, GetMediaCoverResponse.class, null, value);
     }
 
     /**
@@ -438,6 +609,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonPhotoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getPersonPhotoResponse")
+    public JAXBElement<GetPersonPhotoResponse> createGetPersonPhotoResponse(GetPersonPhotoResponse value) {
+        return new JAXBElement<GetPersonPhotoResponse>(_GetPersonPhotoResponse_QNAME, GetPersonPhotoResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetLastClicksResponse }{@code >}}
      * 
      */
@@ -453,6 +633,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://example/", name = "getMediaTitleResponse")
     public JAXBElement<GetMediaTitleResponse> createGetMediaTitleResponse(GetMediaTitleResponse value) {
         return new JAXBElement<GetMediaTitleResponse>(_GetMediaTitleResponse_QNAME, GetMediaTitleResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonBiography }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getPersonBiography")
+    public JAXBElement<GetPersonBiography> createGetPersonBiography(GetPersonBiography value) {
+        return new JAXBElement<GetPersonBiography>(_GetPersonBiography_QNAME, GetPersonBiography.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonMediaResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getPersonMediaResponse")
+    public JAXBElement<GetPersonMediaResponse> createGetPersonMediaResponse(GetPersonMediaResponse value) {
+        return new JAXBElement<GetPersonMediaResponse>(_GetPersonMediaResponse_QNAME, GetPersonMediaResponse.class, null, value);
     }
 
     /**
@@ -474,12 +672,39 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaPlot }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getMediaPlot")
+    public JAXBElement<GetMediaPlot> createGetMediaPlot(GetMediaPlot value) {
+        return new JAXBElement<GetMediaPlot>(_GetMediaPlot_QNAME, GetMediaPlot.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaPerson }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getMediaPerson")
+    public JAXBElement<GetMediaPerson> createGetMediaPerson(GetMediaPerson value) {
+        return new JAXBElement<GetMediaPerson>(_GetMediaPerson_QNAME, GetMediaPerson.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetMovieDateResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://example/", name = "getMovieDateResponse")
     public JAXBElement<GetMovieDateResponse> createGetMovieDateResponse(GetMovieDateResponse value) {
         return new JAXBElement<GetMovieDateResponse>(_GetMovieDateResponse_QNAME, GetMovieDateResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonMedia }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getPersonMedia")
+    public JAXBElement<GetPersonMedia> createGetPersonMedia(GetPersonMedia value) {
+        return new JAXBElement<GetPersonMedia>(_GetPersonMedia_QNAME, GetPersonMedia.class, null, value);
     }
 
     /**
@@ -525,6 +750,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://example/", name = "getListPersonbyKind")
     public JAXBElement<GetListPersonbyKind> createGetListPersonbyKind(GetListPersonbyKind value) {
         return new JAXBElement<GetListPersonbyKind>(_GetListPersonbyKind_QNAME, GetListPersonbyKind.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonPhoto }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getPersonPhoto")
+    public JAXBElement<GetPersonPhoto> createGetPersonPhoto(GetPersonPhoto value) {
+        return new JAXBElement<GetPersonPhoto>(_GetPersonPhoto_QNAME, GetPersonPhoto.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTVShowNumSeason }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getTVShowNumSeason")
+    public JAXBElement<GetTVShowNumSeason> createGetTVShowNumSeason(GetTVShowNumSeason value) {
+        return new JAXBElement<GetTVShowNumSeason>(_GetTVShowNumSeason_QNAME, GetTVShowNumSeason.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaCover }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://example/", name = "getMediaCover")
+    public JAXBElement<GetMediaCover> createGetMediaCover(GetMediaCover value) {
+        return new JAXBElement<GetMediaCover>(_GetMediaCover_QNAME, GetMediaCover.class, null, value);
     }
 
     /**
