@@ -86,10 +86,4 @@ public class Person_List {
         String result = proxy.getMediaTitle(localName);
         return result;
     }
-
-    public String getPageLink(String localName) {
-        if(localName.startsWith("tt"))
-            return "detail_movie.jsp?movie=";
-        return "detail_tvshow.jsp?tvshow=";
-    }
 }

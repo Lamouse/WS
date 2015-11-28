@@ -7,6 +7,9 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
+<jsp:useBean id="movielist" class="Beans.Media_List" scope="page"/>
+<jsp:useBean id="tvshowlist" class="Beans.Media_List" scope="page"/>
+<jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
 
 <head>
 
@@ -140,51 +143,67 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Last clicks </h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
                             </div>
-                            <div class="panel-body" style="overflow-y: auto; height:500px ">
+                            <div class="panel-body" style="overflow-y: auto; max-height:500px ">
                                 <div class="list-group">
-                                    <a href="#" class="list-group-item">
-                                        Arrow
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Batman
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Taken 3
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Inception
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Who am i
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Now you see me
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Taken 2
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Taxi 2
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        law abiding citizen
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        Friends
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        The Mentalist
-                                    </a>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Last clicks </h3>
+                            </div>
+                            <div class="panel-body" style="overflow-y: auto; max-height:500px ">
+                                <div class="list-group">
+                                    <%
+                                        String temp_item;
+                                        List<String> lastClicks = genrelist.getLastClicks();
+                                        for(int i=lastClicks.size()-1; i>=0; i--) {
+                                            temp_item = lastClicks.get(i);
 
-
+                                            if(temp_item.startsWith("tt")) {
+                                            %>
+                                                <a href=<%= "detail_movie.jsp?movie="+temp_item %> class="list-group-item">
+                                                    <b> <%= "MOVIE: "+movielist.getTitle(temp_item)+"("+movielist.getDate(temp_item)+"), " %> </b>
+                                                    <%= "Genre: "+movielist.getGenre(temp_item)+", " %>
+                                                    <%= "Runtime: "+movielist.getRuntime(temp_item)+"m, "%>
+                                                    <%= "Rating: "+movielist.getRating(temp_item)%>
+                                                </a>
+                                            <%
+                                            }
+                                            else if(temp_item.startsWith("ts")) {
+                                            %>
+                                                <a href= <%= "detail_tvshow.jsp?tvshow="+temp_item %> class="list-group-item">
+                                                    <b> <%= "TV_SHOW: "+tvshowlist.getTitle(temp_item)+"("+tvshowlist.getSeasonDate(temp_item)+"), " %> </b>
+                                                    <%= "Genre: "+tvshowlist.getGenre(temp_item)+", " %>
+                                                    <%= "Runtime: "+tvshowlist.getRuntime(temp_item)+"m, "%>
+                                                    <%= "Rating: "+tvshowlist.getRating(temp_item)%>
+                                                </a>
+                                            <%
+                                            }
+                                            else {
+                                            %>
+                                                <a href=<%= "detail_celebs.jsp?celeb="+temp_item %> class="list-group-item">
+                                                    <b><%= "CELEB: "+personList.getName(temp_item)+", "%></b>
+                                                    <%= "Birth date: "+personList.getBirthDate(temp_item)+", " %>
+                                                    <%= "Jobs: "+personList.getJobs(temp_item) %>
+                                                </a>
+                                            <%
+                                            }
+                                        }
+                                    %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

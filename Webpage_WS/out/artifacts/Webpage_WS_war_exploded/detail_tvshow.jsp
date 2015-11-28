@@ -7,7 +7,10 @@
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
 <jsp:useBean id="tvshowDetails" class="Beans.Media_List" scope="page"/>
-<% String tvshow = request.getParameter("tvshow"); %>
+<%
+    String tvshow = request.getParameter("tvshow");
+    genrelist.addLastClicks(tvshow);
+%>
 
 <head>
 
@@ -200,7 +203,7 @@
                                 </tr>
                             </table>   
                               <div class="row">
-                                    <div class="col-md-8"><a href="tv_show.html"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
+                                    <div class="col-md-8"><a href="javascript:javascript:history.go(-1)"><i class="fa fa-arrow-circle-left"></i> Back</a></div>
                                 </div>                                               
                                                                                                                          
                             </div>

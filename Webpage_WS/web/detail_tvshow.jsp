@@ -7,7 +7,10 @@
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
 <jsp:useBean id="tvshowDetails" class="Beans.Media_List" scope="page"/>
-<% String tvshow = request.getParameter("tvshow"); %>
+<%
+    String tvshow = request.getParameter("tvshow");
+    genrelist.addLastClicks(tvshow);
+%>
 
 <head>
 

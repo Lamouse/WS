@@ -439,8 +439,8 @@ public class MyOntology {
     }
 
     @WebMethod
-    public String[] getLastClicks() {
-        return (String[]) lastClicks.toArray();
+    public List<String> getLastClicks() {
+        return lastClicks;
     }
 
     public static void main(String[] argv) {
