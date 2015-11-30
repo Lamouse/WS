@@ -156,46 +156,66 @@
 
                                         <p><b>Born: </b> <%= personDetails.getBirthDate(person) %> </p>
                                         <p><b>Biography:</b> <%= personDetails.getBiography(person) %></p>
-                                        <p name="list_of_media_director"><b> Director of: </b>
-                                            <ul>
+
+                                        <%
+                                            String temp_media;
+                                            List<String> director_list = personDetails.getMedia("Director", person);
+                                            if( director_list.size() > 0) {
+                                        %>
+                                            <p name="list_of_media_director"><b> Director of: </b>
+                                                <ul>
+                                                    <%
+
+                                                        for(int i=0; i<director_list.size(); i++) {
+                                                            temp_media = director_list.get(i);
+                                                    %>p
+                                                        <a href= <%= genrelist.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </ul>
+                                            </p>
+                                        <%
+                                            }
+
+                                            List<String> writer_list = personDetails.getMedia("Writer", person);
+                                            if( writer_list.size() > 0) {
+                                        %>
+                                            <p name="list_of_media_writer"><b> Writer of: </b>
+                                                <ul>
                                                 <%
-                                                    String temp_media;
-                                                    List<String> director_list = personDetails.getMedia("Director", person);
-                                                    for(int i=0; i<director_list.size(); i++) {
-                                                        temp_media = director_list.get(i);
-                                                %>p
-                                                    <a href= <%= genrelist.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+
+                                                    for(int i=0; i<writer_list.size(); i++) {
+                                                        temp_media = writer_list.get(i);
+                                                %>
+                                                <a href= <%= genrelist.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
                                                 <%
                                                     }
                                                 %>
-                                            </ul>
-                                        </p>
-                                        <p name="list_of_media_writer"><b> Writer of: </b>
-                                            <ul>
-                                            <%
-                                                List<String> writer_list = personDetails.getMedia("Writer", person);
-                                                for(int i=0; i<writer_list.size(); i++) {
-                                                    temp_media = writer_list.get(i);
-                                            %>
-                                            <a href= <%= genrelist.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
-                                            <%
-                                                }
-                                            %>
-                                            </ul>
-                                        </p>
-                                        <p name="list_of_media_actor"><b> Actor in: </b>
-                                            <ul>
-                                            <%
-                                                List<String> actor_list = personDetails.getMedia("Actor", person);
-                                                for(int i=0; i<actor_list.size(); i++) {
-                                                    temp_media = actor_list.get(i);
-                                            %>
-                                            <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
-                                            <%
-                                                }
-                                            %>
-                                            </ul>
-                                        </p>
+                                                </ul>
+                                            </p>
+                                        <%
+                                            }
+
+                                            List<String> actor_list = personDetails.getMedia("Actor", person);
+                                            if( actor_list.size() > 0 ) {
+                                        %>
+                                            <p name="list_of_media_actor"><b> Actor in: </b>
+                                                <ul>
+                                                <%
+
+                                                    for(int i=0; i<actor_list.size(); i++) {
+                                                        temp_media = actor_list.get(i);
+                                                %>
+                                                <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                <%
+                                                    }
+                                                %>
+                                                </ul>
+                                            </p>
+                                        <%
+                                            }
+                                        %>
                                     </td>   
                                     <td width="400">
                                         
