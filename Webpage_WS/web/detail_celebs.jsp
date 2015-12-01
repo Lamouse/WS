@@ -8,6 +8,9 @@
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
 <jsp:useBean id="personDetails" class="Beans.Person_List" scope="page"/>
 <%
+    genrelist.setInitialize();
+    personDetails.setInitialize();
+
     String person = request.getParameter("celeb");
     genrelist.addLastClicks(person);
 %>
@@ -168,8 +171,8 @@
 
                                                         for(int i=0; i<director_list.size(); i++) {
                                                             temp_media = director_list.get(i);
-                                                    %>p
-                                                            <a href= <%= genrelist.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                    %>
+                                                            <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
                                                     <%
                                                         }
                                                     %>
@@ -188,7 +191,7 @@
                                                     for(int i=0; i<writer_list.size(); i++) {
                                                         temp_media = writer_list.get(i);
                                                 %>
-                                                    <a href= <%= genrelist.getPageLink(temp_media)+".jsp?celeb="+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                    <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
                                                 <%
                                                     }
                                                 %>

@@ -5,15 +5,17 @@ import Webservice.MyOntologyService;
 
 import java.util.List;
 
-/**
- * Created by ASUS on 28/11/2015.
- */
+
 public class Person_List {
+    private MyOntologyService service;
+    private MyOntology proxy;
+
+    public void setInitialize() {
+        service = new MyOntologyService();
+        proxy = service.getMyOntologyPort();
+    }
 
     public List<String> getPersonlist(String kind, String page, String prefix) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
-
         int page1 = 0;
         if(page != null){
             page1 = Integer.parseInt(page);
@@ -24,21 +26,15 @@ public class Person_List {
     }
 
     public String getName(String tempPerson) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         return proxy.getPersonName(tempPerson);
     }
 
     public String getJobs(String tempPerson) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         List<String> temp_result = proxy.getPersonJob(tempPerson);
         return String.join(", ", temp_result);
     }
 
     public String getBirthDate(String tempPerson) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         return proxy.getPersonBirthDate(tempPerson);
     }
 
@@ -61,28 +57,20 @@ public class Person_List {
     }
 
     public String getPhoto(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         return proxy.getPersonPhoto(localName);
     }
 
     public String getBiography(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         return proxy.getPersonBiography(localName);
 
     }
 
     public List<String> getMedia(String kind, String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         List<String> result = proxy.getPersonMedia(kind, localName);
         return result;
     }
 
     public String getMediaName(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         String result = proxy.getMediaTitle(localName);
         return result;
     }

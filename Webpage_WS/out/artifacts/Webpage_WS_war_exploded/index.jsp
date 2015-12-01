@@ -10,6 +10,12 @@
 <jsp:useBean id="movielist" class="Beans.Media_List" scope="page"/>
 <jsp:useBean id="tvshowlist" class="Beans.Media_List" scope="page"/>
 <jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
+<%
+    genrelist.setInitialize();
+    movielist.setInitialize();
+    tvshowlist.setInitialize();
+    personList.setInitialize();
+%>
 
 <head>
 

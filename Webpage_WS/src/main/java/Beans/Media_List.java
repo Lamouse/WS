@@ -5,15 +5,17 @@ import Webservice.MyOntologyService;
 
 import java.util.List;
 
-/**
- * Created by ASUS on 28/11/2015.
- */
+
 public class Media_List {
+    private MyOntologyService service;
+    private MyOntology proxy;
+
+    public void setInitialize() {
+        service = new MyOntologyService();
+        proxy = service.getMyOntologyPort();
+    }
 
     public List<String> getMovielist(String category, String genre, String page) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
-
         int page1 = 0;
         if(page != null){
             page1 = Integer.parseInt(page);
@@ -25,43 +27,31 @@ public class Media_List {
     }
 
     public String getTitle(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         String result = proxy.getMediaTitle(localName);
         return result;
     }
 
     public int getDate(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         int result = proxy.getMovieDate(localName);
         return result;
     }
 
     public String getSeasonDate(String localname) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         String result = proxy.getTVShowSeasonDate(localname);
         return result;
     }
 
     public String getGenre(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         List<String> temp_result = proxy.getMediaGenre(localName);
         return String.join(", ", temp_result);
     }
 
     public int getRuntime(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         int result = proxy.getMediaRuntime(localName);
         return result;
     }
 
     public float getRating(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         float result = proxy.getMediaRating(localName);
         return result;
     }
@@ -85,36 +75,26 @@ public class Media_List {
     }
 
     public String getCover(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         String result = proxy.getMediaCover(localName);
         return result;
     }
 
     public String getPlot(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         String result = proxy.getMediaPlot(localName);
         return result;
     }
 
     public String getPersonName(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         String result = proxy.getPersonName(localName);
         return result;
     }
 
     public List<String> getPerson(String kind, String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         List<String> result = proxy.getMediaPerson(kind, localName);
         return result;
     }
 
     public int getNumSeason(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         int result = proxy.getTVShowNumSeason(localName);
         return result;
     }

@@ -8,6 +8,10 @@
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
 <jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
+<%
+    genrelist.setInitialize();
+    personList.setInitialize();
+%>
 
 <head>
 

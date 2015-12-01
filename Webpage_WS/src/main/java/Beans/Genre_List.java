@@ -6,12 +6,17 @@ import Webservice.MyOntologyService;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Genre_List {
+    private MyOntologyService service;
+    private MyOntology proxy;
+
+    public void setInitialize() {
+        service = new MyOntologyService();
+        proxy = service.getMyOntologyPort();
+    }
 
     public List<String> getGenrelist(String arg) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
-
         List<String> result = proxy.getListOfGenresIn(arg);
 
         return result;
@@ -26,14 +31,10 @@ public class Genre_List {
     }
 
     public void addLastClicks(String localName) {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         proxy.addIemToLastClicks(localName);
     }
 
     public List<String> getLastClicks() {
-        MyOntologyService service = new MyOntologyService();
-        MyOntology proxy = service.getMyOntologyPort();
         return proxy.getLastClicks();
     }
 }

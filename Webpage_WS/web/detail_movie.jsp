@@ -8,6 +8,9 @@
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
 <jsp:useBean id="movieDetails" class="Beans.Media_List" scope="page"/>
 <%
+    genrelist.setInitialize();
+    movieDetails.setInitialize();
+
     String movie = request.getParameter("movie");
     genrelist.addLastClicks(movie);
 %>
