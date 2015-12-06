@@ -146,7 +146,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> <%= "Movie - "+genre%> </h3>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="overflow-y: scroll; height:250px ">
                                 <div class="list-group">
                                     <%
                                         String tempMovie;
@@ -175,6 +175,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
+                            </div>
+                            <div class="panel-body" style="overflow-y: scroll; height:320px ">
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
             </div>
         </div>
         <!-- /#page-wrapper -->

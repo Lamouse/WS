@@ -146,7 +146,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> <%= "TV_Show - "+genre%> </h3>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="overflow-y: scroll; height:250px ">
                                 <div class="list-group">
                                     <%
                                         String tempTVShow;
@@ -171,6 +171,29 @@
                                     <div class="col-md-8"><a href=<%="tv_show.jsp?genre="+genre+"&page="+tvshowlist.decPage(page1)%>><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
                                     <div class="col-md-4"><a href=<%="tv_show.jsp?genre="+genre+"&page="+tvshowlist.incPage(page1)%>>Next page <i class="fa fa-arrow-circle-right"></i></a></div>
                                 </div>                                                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
+                            </div>
+                            <div class="panel-body" style="overflow-y: scroll; height:320px ">
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
                             </div>
                         </div>
                     </div>
