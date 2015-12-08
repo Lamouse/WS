@@ -138,7 +138,7 @@
         </nav>
 
         <div id="page-wrapper">
-
+-
             <div class="container-fluid">
 
                 <div class="row">
@@ -147,8 +147,8 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Movie </h3>
                             </div>
-                            <div class="panel-body">
-                            <table class="table" border="0">
+                            <div class="panel-body" style="overflow-y: scroll; height: 650px">
+                            <table class="table" border="0 " style="height: 300px">
                                 <tr>
                                     <td>
                                         <img src= <%= movieDetails.getCover(movie) %> style="width:280px;height:350px;">
@@ -158,22 +158,24 @@
                                         <p><b>Genre:</b> <%= movieDetails.getGenre(movie)%> </p>
                                         <p><b>Rating:</b> <%= movieDetails.getRating(movie) %> / 10</p>
                                         <p><b>Plot:</b> <%= movieDetails.getPlot(movie) %> </p>
+
+                                    <td width="400">
                                         <p name="list_directors"><b>Director:</b>
-                                            <ul>
+                                        <ul>
                                             <%
                                                 String temp_celeb;
                                                 List<String> director_list = movieDetails.getPerson("Director", movie);
                                                 for(int i=0; i<director_list.size(); i++) {
                                                     temp_celeb = director_list.get(i);
                                             %>
-                                                    <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= movieDetails.getPersonName(temp_celeb) %></li></a>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= movieDetails.getPersonName(temp_celeb) %></li></a>
                                             <%
                                                 }
                                             %>
-                                            </ul>
+                                        </ul>
                                         </p>
                                         <p name="list_writers"><b>Writer:</b>
-                                            <ul>
+                                        <ul>
                                             <%
                                                 List<String> writer_list = movieDetails.getPerson("Writer", movie);
                                                 for(int i=0; i<writer_list.size(); i++) {
@@ -183,10 +185,10 @@
                                             <%
                                                 }
                                             %>
-                                            </ul>
+                                        </ul>
                                         </p>
                                         <p name="list_actors"><b>Actor:</b>
-                                            <ul>
+                                        <ul>
                                             <%
                                                 List<String> actor_list = movieDetails.getPerson("Actor", movie);
                                                 for(int i=0; i<actor_list.size(); i++) {
@@ -196,10 +198,8 @@
                                             <%
                                                 }
                                             %>
-                                            </ul>
+                                        </ul>
                                         </p>
-                                    </td>   
-                                    <td width="400">
                                         
                                     </td>                              
                                 </tr>
@@ -212,6 +212,29 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
+                            </div>
+                            <div class="panel-body" style="overflow-y: scroll; height:300px ">
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
         <!-- /#page-wrapper -->

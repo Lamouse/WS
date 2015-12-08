@@ -159,48 +159,49 @@
                                         <p><b>Raiting:</b> <%= tvshowDetails.getRating(tvshow) %> / 10</p>
                                         <p><b>Number of seasons:</b> <%= tvshowDetails.getNumSeason(tvshow) %></p>
                                         <p><b>Plot:</b> <%= tvshowDetails.getPlot(tvshow) %> </p>
-                                        <p name="list_directors"><b>Director:</b> 
-                                            <ul>
+
+                                    </td>   
+                                    <td width="400">
+                                        <p name="list_directors"><b>Director:</b>
+                                        <ul>
                                             <%
                                                 String temp_celeb;
                                                 List<String> director_list = tvshowDetails.getPerson("Director", tvshow);
                                                 for(int i=0; i<director_list.size(); i++) {
                                                     temp_celeb = director_list.get(i);
                                             %>
-                                                <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
                                             <%
                                                 }
                                             %>
-                                            </ul>
+                                        </ul>
                                         </p>
-                                        <p name="list_writers"><b>Writers:</b> 
-                                            <ul>
+                                        <p name="list_writers"><b>Writers:</b>
+                                        <ul>
                                             <%
                                                 List<String> writer_list = tvshowDetails.getPerson("Writer", tvshow);
                                                 for(int i=0; i<writer_list.size(); i++) {
                                                     temp_celeb = writer_list.get(i);
                                             %>
-                                                <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
                                             <%
                                                 }
                                             %>
-                                            </ul>
+                                        </ul>
                                         </p>
                                         <p name="list_actors"><b>Actors:</b>
-                                            <ul>
+                                        <ul>
                                             <%
                                                 List<String> actor_list = tvshowDetails.getPerson("Actor", tvshow);
                                                 for(int i=0; i<actor_list.size(); i++) {
                                                     temp_celeb = actor_list.get(i);
                                             %>
-                                                <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
                                             <%
                                                 }
                                             %>
-                                            </ul>
+                                        </ul>
                                         </p>
-                                    </td>   
-                                    <td width="400">
                                         
                                     </td>                              
                                 </tr>
@@ -213,6 +214,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
+                            </div>
+                            <div class="panel-body" style="overflow-y: scroll; height:300px ">
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
         <!-- /#page-wrapper -->

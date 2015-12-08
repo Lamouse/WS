@@ -145,7 +145,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Celebs </h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> MATTIA STRONZO </h3>
                             </div>
                             <div class="panel-body">
                             <table class="table" border="0">
@@ -234,6 +234,26 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
+                            </div>
+                            <div class="panel-body" style="overflow-y: scroll; height:300px ">
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                                <a href="#" class="list-group-item"> Drekc</a>
+                                <a href="#" class="list-group-item"> Something</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
         <!-- /#page-wrapper -->

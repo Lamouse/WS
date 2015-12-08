@@ -20,7 +20,7 @@ import java.util.List;
 @WebService()
 public class MyOntology {
     private static final String namespace = "http://www.semanticweb.org/ontology/SemanticIMDB#";
-    private static final int numPage = 15;
+    private static final int numPage = 5;
     private static ArrayList<String> lastClicks;
     private static OntModel model;
 

@@ -146,7 +146,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> <%= "TV_Show - "+genre%> </h3>
                             </div>
-                            <div class="panel-body" style="overflow-y: scroll; height:250px ">
+                            <div class="panel-body" style="overflow-y: scroll; height:270px ">
                                 <div class="list-group">
                                     <%
                                         String tempTVShow;
@@ -183,7 +183,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
                             </div>
-                            <div class="panel-body" style="overflow-y: scroll; height:320px ">
+                            <div class="panel-body" style="overflow-y: scroll; height:300px ">
                                 <a href="#" class="list-group-item"> Something</a>
                                 <a href="#" class="list-group-item"> Drekc</a>
                                 <a href="#" class="list-group-item"> Something</a>
