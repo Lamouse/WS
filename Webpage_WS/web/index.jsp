@@ -66,7 +66,7 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-                <form class="navbar-form" role="search">
+                <form class="navbar-form" role="search" action="search.jsp">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search" name="q" id="srch-term">
                         <div class="input-group-btn">

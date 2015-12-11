@@ -3,7 +3,6 @@ package Beans;
 import Webservice.MyOntology;
 import Webservice.MyOntologyService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,5 +35,9 @@ public class Genre_List {
 
     public List<String> getLastClicks() {
         return proxy.getLastClicks();
+    }
+
+    public List<String> getResults(String q) {
+        return proxy.getResults(q);
     }
 }

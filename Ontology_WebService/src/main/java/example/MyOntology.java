@@ -443,6 +443,16 @@ public class MyOntology {
         return lastClicks;
     }
 
+    @WebMethod
+    public List<String> getResults(String search) {
+        List<String> result = new ArrayList<String>();
+
+
+
+
+        return result;
+    }
+
     public static void main(String[] argv) {
         Object implementor = new MyOntology ();
         String address = "http://localhost:9000/Ontology";

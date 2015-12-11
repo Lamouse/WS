@@ -63,9 +63,9 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-                <form class="navbar-form" role="search">
+                <form class="navbar-form" role="search" action="search.jsp">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="srch-term">
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
@@ -145,7 +145,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> MATTIA STRONZO </h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Celebs </h3>
                             </div>
                             <div class="panel-body">
                             <table class="table" border="0">
