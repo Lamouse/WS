@@ -1,4 +1,5 @@
 package example;
+
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
@@ -13,13 +14,18 @@ import org.apache.log4j.varia.NullAppender;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @WebService()
 public class MyOntology {
     private static final String namespace = "http://www.semanticweb.org/ontology/SemanticIMDB#";
+    private static final String sparqlPrefix = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+            "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+            "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+            "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
+            "\n";
     private static final int numPage = 5;
     private static ArrayList<String> lastClicks;
     private static OntModel model;
@@ -92,12 +98,7 @@ public class MyOntology {
         ArrayList<String> result = new ArrayList<String>();
 
         if(item.equals("Movie") || item.equals("TV_Show")) {
-            String sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                    "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                    "\n" +
+            String sparqlQuery = sparqlPrefix +
                     "SELECT DISTINCT ?genre\n" +
                     "\tWHERE {\n" +
                     "\t\t?genre rdf:type my:Genre.\n" +
@@ -129,12 +130,7 @@ public class MyOntology {
 
         if(item.equals("Movie") || item.equals("TV_Show")) {
             if ("All".equals(genre)) {
-                sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                        "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                        "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                        "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                        "\n" +
+                sparqlQuery = sparqlPrefix +
                         "SELECT ?movie\n" +
                         "\tWHERE {\n" +
                         "\t\t?movie rdf:type my:"+item+".\n" +
@@ -145,12 +141,7 @@ public class MyOntology {
                         "\tOFFSET " + (page*this.numPage) + "\n" +
                         "\tLIMIT "+numPage;
             } else {
-                sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                        "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                        "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                        "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                        "\n" +
+                sparqlQuery = sparqlPrefix +
                         "SELECT ?movie\n" +
                         "\tWHERE {\n" +
                         "\t\t?movie rdf:type my:"+item+".\n" +
@@ -184,12 +175,7 @@ public class MyOntology {
         String sparqlQuery;
 
         if ("All".equals(kind)) {
-            sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                    "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                    "\n" +
+            sparqlQuery = sparqlPrefix +
                     "SELECT DISTINCT ?person\n" +
                     "\tWHERE {\n" +
                     "\t\t?subclasse rdfs:subClassOf my:Person.\n" +
@@ -197,12 +183,7 @@ public class MyOntology {
                     "\t\t?person my:hasName ?name\n";
         }
         else {
-            sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                    "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                    "\n" +
+            sparqlQuery = sparqlPrefix +
                     "SELECT DISTINCT ?person\n" +
                     "\tWHERE {\n" +
                     "\t\t?person rdf:type my:"+kind+".\n" +
@@ -235,15 +216,10 @@ public class MyOntology {
     @WebMethod
     public ArrayList<String> getMediaGenre(String localname) {
         ArrayList<String> result = new ArrayList<String>();
-        String sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                "\n" +
+        String sparqlQuery = sparqlPrefix +
                 "SELECT ?genre\n" +
                 "\tWHERE {\n" +
-                "\t\tmy:tt0012349 my:hasGenre ?genre.\n" +
+                "\t\tmy:"+localname+" my:hasGenre ?genre.\n" +
                 "\t}" +
                 "\tORDER BY ?genre";
 
@@ -265,12 +241,7 @@ public class MyOntology {
     @WebMethod
     public List<String> getMediaPerson(String kind, String localName) {
         ArrayList<String> result = new ArrayList<String>();
-        String sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                "\n" +
+        String sparqlQuery = sparqlPrefix +
                 "SELECT ?person\n" +
                 "\tWHERE {\n" +
                 "\t\tmy:"+localName+" my:has"+kind+" ?person.\n" +
@@ -295,12 +266,7 @@ public class MyOntology {
     @WebMethod
     public List<String> getPersonMedia(String kind, String localName) {
         ArrayList<String> result = new ArrayList<String>();
-        String sparqlQuery = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
-                "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
-                "\n" +
+        String sparqlQuery = sparqlPrefix +
                 "SELECT ?media\n" +
                 "\tWHERE {\n" +
                 "\t\tmy:"+localName+" my:is"+kind+"In ?media.\n" +
@@ -446,11 +412,354 @@ public class MyOntology {
     @WebMethod
     public List<String> getResults(String search) {
         List<String> result = new ArrayList<String>();
+        List<String> searchClasses = new ArrayList<String>();
+        List<String> searchProperty = new ArrayList<String>();
+        List<String> searchValues;
+        String temp1, temp2;
+
+        //String text = "tv_show \"walkind dead\" actor";
+        // 1-parsed word
+        List<String> words = getWords(search);
+        searchValues = new ArrayList<String>(words);
+
+        // 2-compare with classes
+        List<String> temp_classes = getClasses();
+        for(String word: words) {
+            temp1 = word.toLowerCase();
+            for(String cl: temp_classes) {
+                temp2 = cl.toLowerCase();
+                if(temp1.replace("_"," ").equals(temp2.replace("_", " "))) {
+                    searchClasses.add(cl);
+                    if(searchValues.contains(word))
+                        searchValues.remove(word);
+                }
+            }
+        }
+        if(searchClasses.isEmpty()){
+            searchClasses = temp_classes;
+        }
+
+        // 3-compare with properties
+        List<String> temp_properties = getProperties(searchClasses);
+        for(String word: words) {
+            temp1 = word.toLowerCase();
+            for(String cl: temp_properties) {
+                temp2 = cl.toLowerCase();
+                if(temp2.contains(temp1)) {
+                    searchProperty.add(cl);
+                    if(searchValues.contains(word))
+                        searchValues.remove(word);
+                }
+            }
+        }
+
+        // 4-compare with values and get results
+        List<String> temp_individuals = getIndividuals(searchClasses);
+        for(String individual : temp_individuals) {
+            if(searchIndividual(individual, searchProperty, searchValues))
+                result.add(individual);
+        }
+
+        // finally in case of multiple results
+        // 5-first compare all results, e.g if two person then search if there are a link (media) between them
+        // and use the number of links for order
+        if (result.size() > 1) {
+            result = searchLinksAndSort(result);
+        }
 
 
-
+        System.out.println(searchClasses);
+        System.out.println(searchProperty);
+        System.out.println(searchValues);
+        System.out.println(result);
 
         return result;
+    }
+
+    private List<String> getWords(String text) {
+        List<String> result = new ArrayList<String>();
+        String temp = "";
+
+        int start = 0;
+        int temp_index;
+        int index = text.indexOf("\"", start);
+        while(index != -1) {
+            temp_index = text.indexOf("\"", index+1);
+            if(temp_index == -1)
+                break;
+
+            temp += text.substring(start, index);
+            result.add(text.substring(index+1, temp_index));
+
+            start = temp_index+1;
+            index = text.indexOf("\"", start);
+        }
+        temp += text.substring(start);
+
+        for (String word: temp.split(" ")) {
+            if(!word.isEmpty())
+                result.add(word);
+        }
+
+        return result;
+    }
+
+    private List<String> getClasses() {
+        List<String> result = new ArrayList<String>();
+
+        String sparqlQuery = sparqlPrefix +
+                "SELECT DISTINCT ?class\n" +
+                "WHERE {\n" +
+                "\t?class a owl:Class.\n" +
+                "\t\tFILTER(REGEX(STR(?class), \"^"+namespace+"\")).\n" +
+                "}";
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("class");
+            result.add(temp.asNode().getLocalName());
+        }
+
+        qe.close();
+
+        return result;
+    }
+
+    private List<String> getProperties(List<String> searchClasses) {
+        List<String> result = new ArrayList<String>();
+
+        for(String word : searchClasses) {
+            String sparqlQuery = sparqlPrefix +
+                    "SELECT DISTINCT ?property\n" +
+                    "\tWHERE {\n" +
+                    "\t\t?instance a my:"+word+".\n" +
+                    "\t\t?instance ?property ?obj.\n" +
+                    "\t}";
+
+            Query query = QueryFactory.create(sparqlQuery);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet results = qe.execSelect();
+
+            while (results.hasNext()) {
+                QuerySolution qs = results.nextSolution();
+                RDFNode temp = qs.get("property");
+
+                if(!result.contains(temp.asNode().getLocalName()))
+                    result.add(temp.asNode().getLocalName());
+            }
+
+            qe.close();
+        }
+
+        return result;
+    }
+
+    private List<String> getIndividuals(List<String> searchClasses) {
+        List<String> result = new ArrayList<String>();
+
+        for(String word : searchClasses) {
+            String sparqlQuery = sparqlPrefix +
+                    "SELECT ?instance\n" +
+                    "WHERE {\n" +
+                    "\t?instance a my:"+word+".\n" +
+                    "}";
+
+            Query query = QueryFactory.create(sparqlQuery);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet results = qe.execSelect();
+
+            while (results.hasNext()) {
+                QuerySolution qs = results.nextSolution();
+                RDFNode temp = qs.get("instance");
+
+                if(!result.contains(temp.asNode().getLocalName()))
+                    result.add(temp.asNode().getLocalName());
+            }
+
+            qe.close();
+        }
+
+        return result;
+    }
+
+    private boolean searchIndividulaDataProperty(String individual, List<String> searchProperty, List<String> searchValues) {
+        if(individual.startsWith("nm") || individual.startsWith("tt") || individual.startsWith("ts")) {
+            String sparqlQuery = sparqlPrefix +
+                    "SELECT DISTINCT ?property ?value\n" +
+                    "\tWHERE {\n" +
+                    "\t\t?property a owl:DatatypeProperty.\n" +
+                    "\t\tmy:" + individual + " ?property ?value.\n" +
+                    "\t}";
+
+            Query query = QueryFactory.create(sparqlQuery);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet results = qe.execSelect();
+
+            String value;
+            while (results.hasNext()) {
+                QuerySolution qs = results.nextSolution();
+                RDFNode temp2 = qs.get("property");
+
+                // ignore plot and biography
+                if (!(temp2.equals(hasPlot) || temp2.equals(hasBiography))) {
+                    RDFNode temp = qs.get("value");
+                    value = "" + temp.asLiteral().getValue();
+                    value = value.toLowerCase().replace("_", " ");
+                    for (String searchValue : searchValues) {
+                        if (value.contains(searchValue.toLowerCase().replace("_", " ")))
+                            return true;
+                    }
+                }
+            }
+            qe.close();
+        }
+        else{
+            // Genre
+            String value = individual.toLowerCase();
+            for (String searchValue : searchValues) {
+                if (value.contains(searchValue.toLowerCase()))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    private List<String> getObjectProperties(String individual) {
+        List<String> result = new ArrayList<String>();
+
+        String sparqlQuery = sparqlPrefix +
+                "SELECT DISTINCT ?property ?value\n" +
+                "\tWHERE {\n" +
+                "\t\t?property a owl:ObjectProperty.\n" +
+                "\t\tmy:"+individual+" ?property ?value.\n" +
+                "\t}";
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("value");
+
+            result.add(temp.asNode().getLocalName());
+        }
+        qe.close();
+
+        return result;
+    }
+
+    private boolean searchIndividulaObjectProperty(String individual, List<String> searchProperty, List<String> searchValues) {
+        List<String> results = getObjectProperties(individual);
+
+        for(String result : results){
+            if(searchIndividulaDataProperty(result, searchProperty, searchValues))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean searchIndividual(String individual, List<String> searchProperty, List<String> searchValues) {
+        if(searchIndividulaDataProperty(individual, searchProperty, searchValues))
+            return true;
+
+        if(searchIndividulaObjectProperty(individual, searchProperty, searchValues))
+            return true;
+
+        return false;
+    }
+
+    private List<String> searchLinksAndSort(List<String> temp_results) {
+        System.out.println("Results1: "+ temp_results);
+
+        List<String> result = new ArrayList<String>();
+        TreeMap<String, Integer> hashResults = new TreeMap<String, Integer>();
+        HashMap<String, List<String>> listObjectProperties = new HashMap<String, List<String>>();
+
+        // filter results
+        for(String temp_result : temp_results) {
+            if(temp_result.startsWith("nm") || temp_result.startsWith("tt") || temp_result.startsWith("ts")) {
+                hashResults.put(temp_result, 0);
+            }
+        }
+
+        // get all objectProperties
+        Set<String> keys = hashResults.keySet();
+        for (String key : keys) {
+            listObjectProperties.put(key, getObjectProperties(key));
+        }
+
+        // check commons items
+        List<String> newResults = new ArrayList<String>();
+        List<String> temp_list;
+        List<String> temp_list2;
+        String[] keysArray = keys.toArray(new String[keys.size()]);
+        for(int i=0; i<keysArray.length/2; i++) {
+            temp_list = listObjectProperties.get(keysArray[i]);
+            for(int y=i+1; y<keysArray.length; y++) {
+                temp_list2 = listObjectProperties.get(keysArray[y]);
+                for(String tempString : temp_list2) {
+                    if(!hashResults.keySet().contains(tempString) && temp_list.contains(tempString)) {
+                        hashResults.put(tempString, 0);
+                        newResults.add(tempString);
+                    }
+                }
+            }
+        }
+
+        // if there are commons items get their object properties
+        for(String tempString : newResults) {
+            listObjectProperties.put(tempString, getObjectProperties(tempString));
+        }
+
+        // finally get the frequency of each item
+        keys = hashResults.keySet();
+        keysArray = keys.toArray(new String[keys.size()]);
+        int count;
+        for(int i=0; i<keysArray.length/2; i++) {
+            temp_list = listObjectProperties.get(keysArray[i]);
+            for(int y=i+1; y<keysArray.length; y++) {
+                temp_list2 = listObjectProperties.get(keysArray[y]);
+                for(String tempString : temp_list2) {
+                    if(temp_list.contains(tempString)) {
+                        count = hashResults.containsKey(tempString) ? hashResults.get(tempString) : 0;
+                        hashResults.put(tempString, count+1);
+                    }
+                }
+            }
+        }
+
+        // return the itens order by frequency
+        Map<String, Integer> map = sortByValues(hashResults);
+
+        Iterator ittwo = map.entrySet().iterator();
+        while (ittwo.hasNext()) {
+            Map.Entry pairs = (Map.Entry)ittwo.next();
+            System.out.println(pairs.getKey() + " = " + pairs.getValue());
+            result.add((String) pairs.getKey());
+            ittwo.remove();
+        }
+
+        System.out.println("Results1: "+ result);
+
+        return result;
+    }
+
+    private static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
+        Comparator<K> valueComparator =  new Comparator<K>() {
+            public int compare(K k1, K k2) {
+                int compare = map.get(k2).compareTo(map.get(k1));
+                if (compare == 0) return 1;
+                else return compare;
+            }
+        };
+        Map<K, V> sortedByValues = new TreeMap<K, V>(valueComparator);
+        sortedByValues.putAll(map);
+        return sortedByValues;
     }
 
     public static void main(String[] argv) {
@@ -461,3 +770,4 @@ public class MyOntology {
         System.out.println("WebService is running...");
     }
 }
+

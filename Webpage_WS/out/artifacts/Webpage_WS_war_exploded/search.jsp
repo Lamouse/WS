@@ -156,7 +156,7 @@
                                 <%
                                     String temp_item;
                                     List<String> results = genrelist.getResults(request.getParameter("q"));
-                                    for(int i=results.size()-1; i>=0; i--) {
+                                    for(int i=0; i<results.size(); i++) {
                                         temp_item = results.get(i);
 
                                         if(temp_item.startsWith("tt")) {
@@ -179,7 +179,7 @@
                                 </a>
                                 <%
                                 }
-                                else {
+                                else if(temp_item.startsWith("nm")) {
                                 %>
                                 <a href=<%= "detail_celebs.jsp?celeb="+temp_item %> class="list-group-item">
                                     <b><%= "CELEB: "+personList.getName(temp_item)+", "%></b>
