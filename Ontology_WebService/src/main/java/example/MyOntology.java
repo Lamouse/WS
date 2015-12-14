@@ -411,16 +411,36 @@ public class MyOntology {
 
     @WebMethod
     public List<String> getResults(String search) {
-        List<String> result = new ArrayList<String>();
+        HashMap<String, Integer> firstResults = new HashMap<String, Integer>();
+        List<String> result;
         List<String> searchClasses = new ArrayList<String>();
         List<String> searchProperty = new ArrayList<String>();
         List<String> searchValues;
         String temp1, temp2;
+        boolean link = false;
+        int after = -1;
+        int before = -1;
 
         //String text = "tv_show \"walkind dead\" actor";
         // 1-parsed word
         List<String> words = getWords(search);
         searchValues = new ArrayList<String>(words);
+        if(searchValues.contains("\\link")){
+            link = true;
+            searchValues.remove("\\link");
+        }
+
+        result = new ArrayList<>(words);
+        for(String word : words){
+            if(word.startsWith("\\after")){
+                after = Integer.parseInt(word.replaceAll("[^0-9]+", ""));
+                searchValues.remove(word);
+            }
+            else if(word.startsWith("\\before")){
+                before = Integer.parseInt(word.replaceAll("[^0-9]+", ""));
+                searchValues.remove(word);
+            }
+        }
 
         // 2-compare with classes
         List<String> temp_classes = getClasses();
@@ -455,18 +475,29 @@ public class MyOntology {
 
         // 4-compare with values and get results
         List<String> temp_individuals = getIndividuals(searchClasses);
+        int temp_int;
         for(String individual : temp_individuals) {
-            if(searchIndividual(individual, searchProperty, searchValues))
-                result.add(individual);
+            temp_int = searchIndividual(individual, searchProperty, searchValues, before, after);
+            if(temp_int != -1)
+                firstResults.put(individual, temp_int);
         }
 
         // finally in case of multiple results
         // 5-first compare all results, e.g if two person then search if there are a link (media) between them
+        // but that's only if there are tv_show in the search query
         // and use the number of links for order
-        if (result.size() > 1) {
-            result = searchLinksAndSort(result);
+        if (firstResults.size() > 1) {
+            result = searchLinksAndSort(firstResults, link, before, after);
         }
-
+        else{
+            result = new ArrayList<String>();
+            Iterator ittwo = firstResults.entrySet().iterator();
+            while (ittwo.hasNext()) {
+                Map.Entry pairs = (Map.Entry)ittwo.next();
+                result.add((String) pairs.getKey());
+                ittwo.remove();
+            }
+        }
 
         System.out.println(searchClasses);
         System.out.println(searchProperty);
@@ -586,7 +617,7 @@ public class MyOntology {
         return result;
     }
 
-    private boolean searchIndividulaDataProperty(String individual, List<String> searchProperty, List<String> searchValues) {
+    private int searchIndividulaDataProperty(String individual, List<String> searchProperty, List<String> searchValues) {
         if(individual.startsWith("nm") || individual.startsWith("tt") || individual.startsWith("ts")) {
             String sparqlQuery = sparqlPrefix +
                     "SELECT DISTINCT ?property ?value\n" +
@@ -610,8 +641,11 @@ public class MyOntology {
                     value = "" + temp.asLiteral().getValue();
                     value = value.toLowerCase().replace("_", " ");
                     for (String searchValue : searchValues) {
-                        if (value.contains(searchValue.toLowerCase().replace("_", " ")))
-                            return true;
+                        if (value.contains(searchValue.toLowerCase().replace("_", " "))){
+                            if(searchProperty.contains(temp2.asNode().getLocalName()))
+                                return 10;
+                            return 5;
+                        }
                     }
                 }
             }
@@ -622,11 +656,11 @@ public class MyOntology {
             String value = individual.toLowerCase();
             for (String searchValue : searchValues) {
                 if (value.contains(searchValue.toLowerCase()))
-                    return true;
+                    return 5;
             }
         }
 
-        return false;
+        return -1;
     }
 
     private List<String> getObjectProperties(String individual) {
@@ -653,27 +687,79 @@ public class MyOntology {
         return result;
     }
 
-    private boolean searchIndividulaObjectProperty(String individual, List<String> searchProperty, List<String> searchValues) {
+    private int searchIndividulaObjectProperty(String individual, List<String> searchProperty, List<String> searchValues) {
         List<String> results = getObjectProperties(individual);
 
+        int temp_int;
         for(String result : results){
-            if(searchIndividulaDataProperty(result, searchProperty, searchValues))
-                return true;
+            temp_int = searchIndividulaDataProperty(result, searchProperty, searchValues);
+            if(temp_int != -1)
+                return 5;
         }
-        return false;
+        return -1;
     }
 
-    private boolean searchIndividual(String individual, List<String> searchProperty, List<String> searchValues) {
-        if(searchIndividulaDataProperty(individual, searchProperty, searchValues))
-            return true;
+    private boolean checkIndividual(String individual, int before, int after) {
+        try {
+            if(before != -1 || after != -1){
+                Individual item = model.getIndividual(namespace+individual);
+                Literal literal;
+                if(individual.startsWith("nm")) {
+                    literal = item.getPropertyValue(hasBirthDate).asLiteral();
+                    if(before != -1 && literal.getInt() > before)
+                        return false;
+                    if(after != -1 && literal.getInt() < after)
+                        return false;
+                }
+                else if(individual.startsWith("tt")) {
+                    literal = item.getPropertyValue(hasYear).asLiteral();
+                    if(before != -1 && literal.getInt() > before)
+                        return false;
+                    if(after != -1 && literal.getInt() < after)
+                        return false;
+                }
+                else if (individual.startsWith("ts")) {
+                    literal = item.getPropertyValue(hasSeasonYears).asLiteral();
+                    String[] string_temp = literal.getString().split("-");
 
-        if(searchIndividulaObjectProperty(individual, searchProperty, searchValues))
-            return true;
+                    if(before != -1 && Integer.parseInt(string_temp[0]) > before)
+                        return false;
 
-        return false;
+                    if(after != -1) {
+                        if(string_temp.length < 2 || "".equals(string_temp[1])){
+                            if (2015 < after)
+                                return false;
+                        }
+                        else if (Integer.parseInt(string_temp[1]) < after)
+                            return false;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
-    private List<String> searchLinksAndSort(List<String> temp_results) {
+    private int searchIndividual(String individual, List<String> searchProperty, List<String> searchValues, int before, int after) {
+        int temp_int;
+
+        if (!checkIndividual(individual, before, after))
+            return -1;
+
+        if(searchValues.isEmpty())
+            return 1;
+
+        temp_int = searchIndividulaDataProperty(individual, searchProperty, searchValues);
+        if(temp_int != -1)
+            return temp_int;
+
+        temp_int = searchIndividulaObjectProperty(individual, searchProperty, searchValues);
+        return temp_int;
+    }
+
+    private List<String> searchLinksAndSort(HashMap<String, Integer> temp_results, boolean link, int before, int after) {
         System.out.println("Results1: "+ temp_results);
 
         List<String> result = new ArrayList<String>();
@@ -681,10 +767,15 @@ public class MyOntology {
         HashMap<String, List<String>> listObjectProperties = new HashMap<String, List<String>>();
 
         // filter results
-        for(String temp_result : temp_results) {
+        String temp_result;
+        Iterator ittwo = temp_results.entrySet().iterator();
+        while (ittwo.hasNext()) {
+            Map.Entry pairs = (Map.Entry)ittwo.next();
+            temp_result = (String) pairs.getKey();
             if(temp_result.startsWith("nm") || temp_result.startsWith("tt") || temp_result.startsWith("ts")) {
-                hashResults.put(temp_result, 0);
+                hashResults.put(temp_result, (int) pairs.getValue());
             }
+            ittwo.remove();
         }
 
         // get all objectProperties
@@ -698,22 +789,31 @@ public class MyOntology {
         List<String> temp_list;
         List<String> temp_list2;
         String[] keysArray = keys.toArray(new String[keys.size()]);
-        for(int i=0; i<keysArray.length/2; i++) {
-            temp_list = listObjectProperties.get(keysArray[i]);
-            for(int y=i+1; y<keysArray.length; y++) {
-                temp_list2 = listObjectProperties.get(keysArray[y]);
-                for(String tempString : temp_list2) {
-                    if(!hashResults.keySet().contains(tempString) && temp_list.contains(tempString)) {
-                        hashResults.put(tempString, 0);
-                        newResults.add(tempString);
+
+        if(link) {
+            for (int i = 0; i < keysArray.length / 2; i++) {
+                temp_list = listObjectProperties.get(keysArray[i]);
+                for (int y = i + 1; y < keysArray.length; y++) {
+                    temp_list2 = listObjectProperties.get(keysArray[y]);
+                    for (String tempString : temp_list2) {
+                        if (!hashResults.keySet().contains(tempString) && temp_list.contains(tempString)) {
+                            if(checkIndividual(tempString, before, after)) {
+                                hashResults.put(tempString, 0);
+                                newResults.add(tempString);
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        // if there are commons items get their object properties
-        for(String tempString : newResults) {
-            listObjectProperties.put(tempString, getObjectProperties(tempString));
+            // if there are commons items get their object properties
+            for (String tempString : newResults) {
+                if (tempString.startsWith("nm") || tempString.startsWith("tt") || tempString.startsWith("ts")) {
+                    listObjectProperties.put(tempString, getObjectProperties(tempString));
+                } else {
+                    listObjectProperties.put(tempString, new ArrayList<String>());
+                }
+            }
         }
 
         // finally get the frequency of each item
@@ -726,20 +826,21 @@ public class MyOntology {
                 temp_list2 = listObjectProperties.get(keysArray[y]);
                 for(String tempString : temp_list2) {
                     if(temp_list.contains(tempString)) {
-                        count = hashResults.containsKey(tempString) ? hashResults.get(tempString) : 0;
-                        hashResults.put(tempString, count+1);
+                        count = hashResults.containsKey(keysArray[i]) ? hashResults.get(keysArray[i]) : 0;
+                        hashResults.put(keysArray[i], count+1);
+                        count = hashResults.containsKey(keysArray[y]) ? hashResults.get(keysArray[y]) : 0;
+                        hashResults.put(keysArray[y], count+1);
                     }
                 }
             }
         }
 
-        // return the itens order by frequency
+        // return the items order by frequency
         Map<String, Integer> map = sortByValues(hashResults);
 
-        Iterator ittwo = map.entrySet().iterator();
+        ittwo = map.entrySet().iterator();
         while (ittwo.hasNext()) {
             Map.Entry pairs = (Map.Entry)ittwo.next();
-            System.out.println(pairs.getKey() + " = " + pairs.getValue());
             result.add((String) pairs.getKey());
             ittwo.remove();
         }
