@@ -826,10 +826,10 @@ public class MyOntology {
                 temp_list2 = listObjectProperties.get(keysArray[y]);
                 for(String tempString : temp_list2) {
                     if(temp_list.contains(tempString)) {
-                        count = hashResults.containsKey(keysArray[i]) ? hashResults.get(keysArray[i]) : 0;
-                        hashResults.put(keysArray[i], count+1);
-                        count = hashResults.containsKey(keysArray[y]) ? hashResults.get(keysArray[y]) : 0;
-                        hashResults.put(keysArray[y], count+1);
+                        if(hashResults.containsKey(tempString)){
+                            count = hashResults.get(tempString);
+                            hashResults.put(tempString, count+1);
+                        }
                     }
                 }
             }
