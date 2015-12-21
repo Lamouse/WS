@@ -414,14 +414,14 @@ public class MyOntology {
         HashMap<String, Integer> firstResults = new HashMap<String, Integer>();
         List<String> result;
         List<String> searchClasses = new ArrayList<String>();
-        List<String> searchProperty = new ArrayList<String>();
         List<String> searchValues;
         String temp1, temp2;
         boolean link = false;
         int after = -1;
         int before = -1;
 
-        //String text = "tv_show \"walkind dead\" actor";
+        //String text = "tv_show \"walking dead\" actor";
+        //String text = "\"clint eastwood\" director media";
         // 1-parsed word
         List<String> words = getWords(search);
         searchValues = new ArrayList<String>(words);
@@ -430,7 +430,6 @@ public class MyOntology {
             searchValues.remove("\\link");
         }
 
-        result = new ArrayList<>(words);
         for(String word : words){
             if(word.startsWith("\\after")){
                 after = Integer.parseInt(word.replaceAll("[^0-9]+", ""));
@@ -460,26 +459,37 @@ public class MyOntology {
         }
 
         // 3-compare with properties
-        List<String> temp_properties = getProperties(searchClasses);
-        for(String word: words) {
-            temp1 = word.toLowerCase();
-            for(String cl: temp_properties) {
-                temp2 = cl.toLowerCase();
-                if(temp2.contains(temp1)) {
-                    searchProperty.add(cl);
-                    if(searchValues.contains(word))
-                        searchValues.remove(word);
+        HashMap<String, List<String>> listClassProperties = new HashMap<String, List<String>>();
+        List<String> searchProperty = new ArrayList<String>();
+        for(String temp_class : searchClasses) {
+            searchProperty.clear();
+            List<String> temp_properties = getProperties(temp_class);
+            for (String word : words) {
+                temp1 = word.toLowerCase();
+                for (String cl : temp_properties) {
+                    temp2 = cl.toLowerCase();
+                    if (temp2.contains(temp1) && !temp1.contains(temp_class.toLowerCase())) {
+                        searchProperty.add(cl);
+                        if (searchValues.contains(word))
+                            searchValues.remove(word);
+                    }
                 }
             }
+
+            listClassProperties.put(temp_class, new ArrayList<>(searchProperty));
         }
 
         // 4-compare with values and get results
-        List<String> temp_individuals = getIndividuals(searchClasses);
+        HashMap<String, String> temp_individuals = getIndividuals(listClassProperties);
+        System.out.println(temp_individuals);
+
         int temp_int;
-        for(String individual : temp_individuals) {
-            temp_int = searchIndividual(individual, searchProperty, searchValues, before, after);
+        Iterator<Map.Entry<String,String>> itone = temp_individuals.entrySet().iterator();
+        while (itone.hasNext()) {
+            Map.Entry pairs = (Map.Entry) itone.next();
+            temp_int = searchIndividual((String) pairs.getKey(), listClassProperties.get(pairs.getValue()), searchValues, before, after);
             if(temp_int != -1)
-                firstResults.put(individual, temp_int);
+                firstResults.put((String) pairs.getKey(), temp_int);
         }
 
         // finally in case of multiple results
@@ -495,10 +505,10 @@ public class MyOntology {
             while (ittwo.hasNext()) {
                 Map.Entry pairs = (Map.Entry)ittwo.next();
                 result.add((String) pairs.getKey());
-                ittwo.remove();
             }
         }
 
+        System.out.println("\nFinal Results:");
         System.out.println(searchClasses);
         System.out.println(searchProperty);
         System.out.println(searchValues);
@@ -560,58 +570,86 @@ public class MyOntology {
         return result;
     }
 
-    private List<String> getProperties(List<String> searchClasses) {
+    private List<String> getProperties(String word) {
         List<String> result = new ArrayList<String>();
 
-        for(String word : searchClasses) {
-            String sparqlQuery = sparqlPrefix +
-                    "SELECT DISTINCT ?property\n" +
-                    "\tWHERE {\n" +
-                    "\t\t?instance a my:"+word+".\n" +
-                    "\t\t?instance ?property ?obj.\n" +
-                    "\t}";
+        String sparqlQuery = sparqlPrefix +
+                "SELECT DISTINCT ?property\n" +
+                "\tWHERE {\n" +
+                "\t\t?instance a my:"+word+".\n" +
+                "\t\t?instance ?property ?obj.\n" +
+                "\t}";
 
-            Query query = QueryFactory.create(sparqlQuery);
-            QueryExecution qe = QueryExecutionFactory.create(query, model);
-            ResultSet results = qe.execSelect();
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
 
-            while (results.hasNext()) {
-                QuerySolution qs = results.nextSolution();
-                RDFNode temp = qs.get("property");
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("property");
 
-                if(!result.contains(temp.asNode().getLocalName()))
-                    result.add(temp.asNode().getLocalName());
-            }
-
-            qe.close();
+            if(!result.contains(temp.asNode().getLocalName()))
+                result.add(temp.asNode().getLocalName());
         }
+
+        qe.close();
 
         return result;
     }
 
-    private List<String> getIndividuals(List<String> searchClasses) {
-        List<String> result = new ArrayList<String>();
+    private HashMap<String, String> getIndividuals(HashMap<String, List<String>> searchClasses) {
+        HashMap<String, String> result = new HashMap<>();
 
-        for(String word : searchClasses) {
-            String sparqlQuery = sparqlPrefix +
-                    "SELECT ?instance\n" +
-                    "WHERE {\n" +
-                    "\t?instance a my:"+word+".\n" +
-                    "}";
+        Iterator<Map.Entry<String,List<String>>> ittwo = searchClasses.entrySet().iterator();
+        List<String> temp_list;
 
-            Query query = QueryFactory.create(sparqlQuery);
-            QueryExecution qe = QueryExecutionFactory.create(query, model);
-            ResultSet results = qe.execSelect();
+        while (ittwo.hasNext()) {
+            Map.Entry pairs = (Map.Entry) ittwo.next();
 
-            while (results.hasNext()) {
-                QuerySolution qs = results.nextSolution();
-                RDFNode temp = qs.get("instance");
+            temp_list = (List<String>) pairs.getValue();
+            if (temp_list.isEmpty()) {
+                String sparqlQuery = sparqlPrefix +
+                        "SELECT ?instance\n" +
+                        "WHERE {\n" +
+                        "\t?instance a my:"+pairs.getKey()+".\n" +
+                        "}";
 
-                if(!result.contains(temp.asNode().getLocalName()))
-                    result.add(temp.asNode().getLocalName());
+                Query query = QueryFactory.create(sparqlQuery);
+                QueryExecution qe = QueryExecutionFactory.create(query, model);
+                ResultSet results = qe.execSelect();
+
+                while (results.hasNext()) {
+                    QuerySolution qs = results.nextSolution();
+                    RDFNode temp = qs.get("instance");
+
+                    result.put(temp.asNode().getLocalName(), (String) pairs.getKey());
+                }
+
+                qe.close();
+
+            } else {
+                for (String word : temp_list) {
+                    String sparqlQuery = sparqlPrefix +
+                            "SELECT ?instance\n" +
+                            "WHERE {\n" +
+                            "\t?instance a my:" + pairs.getKey() + ".\n" +
+                            "\t?instance my:" + word + " ?someMedia.\n" +
+                            "}";
+
+                    Query query = QueryFactory.create(sparqlQuery);
+                    QueryExecution qe = QueryExecutionFactory.create(query, model);
+                    ResultSet results = qe.execSelect();
+
+                    while (results.hasNext()) {
+                        QuerySolution qs = results.nextSolution();
+                        RDFNode temp = qs.get("instance");
+
+                        result.put(temp.asNode().getLocalName(), (String) pairs.getKey());
+                    }
+
+                    qe.close();
+                }
             }
-
-            qe.close();
         }
 
         return result;
@@ -619,37 +657,67 @@ public class MyOntology {
 
     private int searchIndividulaDataProperty(String individual, List<String> searchProperty, List<String> searchValues) {
         if(individual.startsWith("nm") || individual.startsWith("tt") || individual.startsWith("ts")) {
-            String sparqlQuery = sparqlPrefix +
-                    "SELECT DISTINCT ?property ?value\n" +
-                    "\tWHERE {\n" +
-                    "\t\t?property a owl:DatatypeProperty.\n" +
-                    "\t\tmy:" + individual + " ?property ?value.\n" +
-                    "\t}";
+            if(searchProperty.isEmpty()) {
+                String sparqlQuery = sparqlPrefix +
+                        "SELECT DISTINCT ?property ?value\n" +
+                        "\tWHERE {\n" +
+                        "\t\t?property a owl:DatatypeProperty.\n" +
+                        "\t\tmy:" + individual + " ?property ?value.\n" +
+                        "\t}";
 
-            Query query = QueryFactory.create(sparqlQuery);
-            QueryExecution qe = QueryExecutionFactory.create(query, model);
-            ResultSet results = qe.execSelect();
+                Query query = QueryFactory.create(sparqlQuery);
+                QueryExecution qe = QueryExecutionFactory.create(query, model);
+                ResultSet results = qe.execSelect();
 
-            String value;
-            while (results.hasNext()) {
-                QuerySolution qs = results.nextSolution();
-                RDFNode temp2 = qs.get("property");
+                String value;
+                while (results.hasNext()) {
+                    QuerySolution qs = results.nextSolution();
+                    RDFNode temp2 = qs.get("property");
 
-                // ignore plot and biography
-                if (!(temp2.equals(hasPlot) || temp2.equals(hasBiography))) {
-                    RDFNode temp = qs.get("value");
-                    value = "" + temp.asLiteral().getValue();
-                    value = value.toLowerCase().replace("_", " ");
-                    for (String searchValue : searchValues) {
-                        if (value.contains(searchValue.toLowerCase().replace("_", " "))){
-                            if(searchProperty.contains(temp2.asNode().getLocalName()))
-                                return 10;
-                            return 5;
+                    // ignore plot and biography
+                    if (!(temp2.equals(hasPlot) || temp2.equals(hasBiography))) {
+                        RDFNode temp = qs.get("value");
+                        value = "" + temp.asLiteral().getValue();
+                        value = value.toLowerCase().replace("_", " ");
+                        for (String searchValue : searchValues) {
+                            if (value.contains(searchValue.toLowerCase().replace("_", " "))) {
+                                if (searchProperty.contains(temp2.asNode().getLocalName()))
+                                    return 10;
+                                return 5;
+                            }
                         }
                     }
                 }
+                qe.close();
             }
-            qe.close();
+            else {
+                for(String property : searchProperty) {
+                    String sparqlQuery = sparqlPrefix +
+                            "SELECT DISTINCT ?value\n" +
+                            "\tWHERE {\n" +
+                            "\t\tmy:"+property+" a owl:DatatypeProperty.\n" +
+                            "\t\tmy:" + individual + " my:"+property+" ?value.\n" +
+                            "\t}";
+
+                    Query query = QueryFactory.create(sparqlQuery);
+                    QueryExecution qe = QueryExecutionFactory.create(query, model);
+                    ResultSet results = qe.execSelect();
+
+                    String value;
+                    while (results.hasNext()) {
+                        QuerySolution qs = results.nextSolution();
+                        RDFNode temp = qs.get("value");
+                        value = "" + temp.asLiteral().getValue();
+                        value = value.toLowerCase().replace("_", " ");
+                        for (String searchValue : searchValues) {
+                            if (value.contains(searchValue.toLowerCase().replace("_", " "))) {
+                                return 10;
+                            }
+                        }
+                    }
+                    qe.close();
+                }
+            }
         }
         else{
             // Genre
@@ -667,7 +735,7 @@ public class MyOntology {
         List<String> result = new ArrayList<String>();
 
         String sparqlQuery = sparqlPrefix +
-                "SELECT DISTINCT ?property ?value\n" +
+                "SELECT DISTINCT ?value\n" +
                 "\tWHERE {\n" +
                 "\t\t?property a owl:ObjectProperty.\n" +
                 "\t\tmy:"+individual+" ?property ?value.\n" +
@@ -679,7 +747,6 @@ public class MyOntology {
         while (results.hasNext()) {
             QuerySolution qs = results.nextSolution();
             RDFNode temp = qs.get("value");
-
             result.add(temp.asNode().getLocalName());
         }
         qe.close();
@@ -687,14 +754,41 @@ public class MyOntology {
         return result;
     }
 
+    private List<String> getObjectProperties(String individual, List<String> searchProperty) {
+        if(searchProperty.isEmpty())
+            return getObjectProperties(individual);
+
+        List<String> result = new ArrayList<String>();
+
+        for(String property : searchProperty) {
+            String sparqlQuery = sparqlPrefix +
+                    "SELECT DISTINCT ?value\n" +
+                    "\tWHERE {\n" +
+                    "\t\tmy:"+property+" a owl:ObjectProperty.\n" +
+                    "\t\tmy:" + individual + " my:"+property+" ?value.\n" +
+                    "\t}";
+
+            Query query = QueryFactory.create(sparqlQuery);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet results = qe.execSelect();
+            while (results.hasNext()) {
+                QuerySolution qs = results.nextSolution();
+                RDFNode temp = qs.get("value");
+                result.add(temp.asNode().getLocalName());
+            }
+            qe.close();
+        }
+        return result;
+    }
+
     private int searchIndividulaObjectProperty(String individual, List<String> searchProperty, List<String> searchValues) {
-        List<String> results = getObjectProperties(individual);
+        List<String> results = getObjectProperties(individual, searchProperty);
 
         int temp_int;
         for(String result : results){
-            temp_int = searchIndividulaDataProperty(result, searchProperty, searchValues);
+            temp_int = searchIndividulaDataProperty(result, new ArrayList<String>(), searchValues);
             if(temp_int != -1)
-                return 5;
+                return 1;
         }
         return -1;
     }
@@ -775,7 +869,6 @@ public class MyOntology {
             if(temp_result.startsWith("nm") || temp_result.startsWith("tt") || temp_result.startsWith("ts")) {
                 hashResults.put(temp_result, (int) pairs.getValue());
             }
-            ittwo.remove();
         }
 
         // get all objectProperties
@@ -842,7 +935,6 @@ public class MyOntology {
         while (ittwo.hasNext()) {
             Map.Entry pairs = (Map.Entry)ittwo.next();
             result.add((String) pairs.getKey());
-            ittwo.remove();
         }
 
         System.out.println("Results1: "+ result);
