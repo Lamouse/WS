@@ -481,8 +481,6 @@ public class MyOntology {
 
         // 4-compare with values and get results
         HashMap<String, String> temp_individuals = getIndividuals(listClassProperties);
-        System.out.println(temp_individuals);
-
         int temp_int;
         Iterator<Map.Entry<String,String>> itone = temp_individuals.entrySet().iterator();
         while (itone.hasNext()) {
@@ -509,8 +507,7 @@ public class MyOntology {
         }
 
         System.out.println("\nFinal Results:");
-        System.out.println(searchClasses);
-        System.out.println(searchProperty);
+        System.out.println(listClassProperties);
         System.out.println(searchValues);
         System.out.println(result);
 
@@ -814,19 +811,24 @@ public class MyOntology {
                 }
                 else if (individual.startsWith("ts")) {
                     literal = item.getPropertyValue(hasSeasonYears).asLiteral();
-                    String[] string_temp = literal.getString().split("-");
-
-                    if(before != -1 && Integer.parseInt(string_temp[0]) > before)
-                        return false;
-
-                    if(after != -1) {
-                        if(string_temp.length < 2 || "".equals(string_temp[1])){
-                            if (2015 < after)
-                                return false;
-                        }
-                        else if (Integer.parseInt(string_temp[1]) < after)
-                            return false;
+                    int temp_begin, temp_end;
+                    if(literal.getString().indexOf('-') == -1){
+                        temp_begin = temp_end = Integer.parseInt(literal.getString());
                     }
+                    else {
+                        String[] string_temp = literal.getString().split("-");
+                        temp_begin = Integer.parseInt(string_temp[0]);
+
+                        if(string_temp.length < 2 || "".equals(string_temp[1]))
+                            temp_end = 2015;
+                        else
+                            temp_end = Integer.parseInt(string_temp[1]);
+                    }
+
+                    if(before != -1 && temp_begin > before)
+                        return false;
+                    if(after != -1 && temp_end < after)
+                        return false;
                 }
             }
         } catch (Exception e) {
@@ -854,7 +856,7 @@ public class MyOntology {
     }
 
     private List<String> searchLinksAndSort(HashMap<String, Integer> temp_results, boolean link, int before, int after) {
-        System.out.println("Results1: "+ temp_results);
+        //System.out.println("Results1: "+ temp_results);
 
         List<String> result = new ArrayList<String>();
         TreeMap<String, Integer> hashResults = new TreeMap<String, Integer>();
@@ -937,7 +939,7 @@ public class MyOntology {
             result.add((String) pairs.getKey());
         }
 
-        System.out.println("Results1: "+ result);
+        //System.out.println("Results1: "+ result);
 
         return result;
     }
