@@ -7,10 +7,12 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
-<jsp:useBean id="movielist" class="Beans.Media_List" scope="page"/>
+<jsp:useBean id="medialist" class="Beans.Media_List" scope="page"/>
+<jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
 <%
     genrelist.setInitialize();
-    movielist.setInitialize();
+    medialist.setInitialize();
+    personList.setInitialize();
 %>
 
 <head>
@@ -151,26 +153,26 @@
                                     <%
                                         String tempMovie;
                                         String page1 = request.getParameter("page");
-                                        List<String> temp_movieList = movielist.getMovielist("Movie", genre, page1);
+                                        List<String> temp_movieList = medialist.getMovielist("Movie", genre, page1);
                                         for (int i=0; i<temp_movieList.size() ;i++){
                                             tempMovie = temp_movieList.get(i);
                                     %>
                                         <a href=<%= "detail_movie.jsp?movie="+tempMovie %> class="list-group-item">
-                                            <b> <%= movielist.getTitle(tempMovie)+"("+movielist.getDate(tempMovie)+"), " %> </b>
-                                            <%= "Genre: "+movielist.getGenre(tempMovie)+", " %>
-                                            <%= "Runtime: "+movielist.getRuntime(tempMovie)+"m, "%>
-                                            <%= "Rating: "+movielist.getRating(tempMovie)%>
+                                            <b> <%= medialist.getTitle(tempMovie)+"("+medialist.getDate(tempMovie)+"), " %> </b>
+                                            <%= "Genre: "+medialist.getGenre(tempMovie)+", " %>
+                                            <%= "Runtime: "+medialist.getRuntime(tempMovie)+"m, "%>
+                                            <%= "Rating: "+medialist.getRating(tempMovie)%>
                                         </a>
                                     <%
                                         }
                                     %>
-                                </div> 
+                                </div>
 
                                 <!--PREVIOUS PAGE ///// NEXT PAGE -->
                                 <div class="row">
-                                  <div class="col-md-8"><a href=<%="movie.jsp?genre="+genre+"&page="+movielist.decPage(page1)%>><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
-                                  <div class="col-md-4"><a href=<%="movie.jsp?genre="+genre+"&page="+movielist.incPage(page1)%>>Next page <i class="fa fa-arrow-circle-right"></i></a></div>
-                                </div>                                                            
+                                  <div class="col-md-8"><a href=<%="movie.jsp?genre="+genre+"&page="+medialist.decPage(page1)%>><i class="fa fa-arrow-circle-left"></i> Previous page</a></div>
+                                  <div class="col-md-4"><a href=<%="movie.jsp?genre="+genre+"&page="+medialist.incPage(page1)%>>Next page <i class="fa fa-arrow-circle-right"></i></a></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -182,16 +184,45 @@
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
                             </div>
                             <div class="panel-body" style="overflow-y: scroll; max-height:300px ">
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
+                                <div class="list-group">
+                                    <%
+                                        String temp_item;
+                                        List<String> recommendation = genrelist.getRecommendation();
+                                        for(int i=recommendation.size()-1; i>=0; i--) {
+                                            temp_item = recommendation.get(i);
+
+                                            if(temp_item.startsWith("tt")) {
+                                    %>
+                                    <a href=<%= "detail_movie.jsp?movie="+temp_item %> class="list-group-item">
+                                        <b> <%= "MOVIE: "+medialist.getTitle(temp_item)+"("+medialist.getDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else if(temp_item.startsWith("ts")) {
+                                    %>
+                                    <a href= <%= "detail_tvshow.jsp?tvshow="+temp_item %> class="list-group-item">
+                                        <b> <%= "TV_SHOW: "+medialist.getTitle(temp_item)+"("+medialist.getSeasonDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else {
+                                    %>
+                                    <a href=<%= "detail_celebs.jsp?celeb="+temp_item %> class="list-group-item">
+                                        <b><%= "CELEB: "+personList.getName(temp_item)+", "%></b>
+                                        <%= "Birth date: "+personList.getBirthDate(temp_item)+", " %>
+                                        <%= "Jobs: "+personList.getJobs(temp_item) %>
+                                    </a>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -37,6 +37,10 @@ public class Genre_List {
         return proxy.getLastClicks();
     }
 
+    public List<String> getRecommendation() {
+        return proxy.getRecommendation();
+    }
+
     public List<String> getResults(String q) {
         return proxy.getResults(q);
     }

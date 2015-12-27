@@ -7,9 +7,11 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
+<jsp:useBean id="medialist" class="Beans.Media_List" scope="page"/>
 <jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
 <%
     genrelist.setInitialize();
+    medialist.setInitialize();
     personList.setInitialize();
 %>
 
@@ -218,16 +220,45 @@
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
                             </div>
                             <div class="panel-body" style="overflow-y: scroll; max-height:300px ">
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
+                                <div class="list-group">
+                                    <%
+                                        String temp_item;
+                                        List<String> recommendation = genrelist.getRecommendation();
+                                        for(int i=recommendation.size()-1; i>=0; i--) {
+                                            temp_item = recommendation.get(i);
+
+                                            if(temp_item.startsWith("tt")) {
+                                    %>
+                                    <a href=<%= "detail_movie.jsp?movie="+temp_item %> class="list-group-item">
+                                        <b> <%= "MOVIE: "+medialist.getTitle(temp_item)+"("+medialist.getDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else if(temp_item.startsWith("ts")) {
+                                    %>
+                                    <a href= <%= "detail_tvshow.jsp?tvshow="+temp_item %> class="list-group-item">
+                                        <b> <%= "TV_SHOW: "+medialist.getTitle(temp_item)+"("+medialist.getSeasonDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else {
+                                    %>
+                                    <a href=<%= "detail_celebs.jsp?celeb="+temp_item %> class="list-group-item">
+                                        <b><%= "CELEB: "+personList.getName(temp_item)+", "%></b>
+                                        <%= "Birth date: "+personList.getBirthDate(temp_item)+", " %>
+                                        <%= "Jobs: "+personList.getJobs(temp_item) %>
+                                    </a>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -27,7 +27,9 @@ public class MyOntology {
             "PREFIX my: <http://www.semanticweb.org/ontology/SemanticIMDB#>\n" +
             "\n";
     private static final int numPage = 5;
+    private static final int recommendationSize = 10;
     private static ArrayList<String> lastClicks;
+    private static ArrayList<String> recommendation;
     private static OntModel model;
 
     // classes
@@ -91,6 +93,7 @@ public class MyOntology {
         isWriterIn = model.createProperty(namespace, "isWriterIn");
 
         lastClicks = new ArrayList<String>();
+        recommendation = new ArrayList<String>();
     }
 
     @WebMethod
@@ -402,6 +405,13 @@ public class MyOntology {
 
         while (lastClicks.size() > 30)
             lastClicks.remove(0);
+
+        updateRecommendation();
+    }
+
+    @WebMethod
+    public ArrayList<String> getRecommendation() {
+        return recommendation;
     }
 
     @WebMethod
@@ -942,6 +952,102 @@ public class MyOntology {
         //System.out.println("Results1: "+ result);
 
         return result;
+    }
+
+    private void updateRecommendation() {
+        int numTV = 0;
+        int numMovie = 0;
+        HashMap<String, Integer> genreList = new HashMap<String, Integer>();
+        List<String> temp_list;
+        List<String> temp_list2;
+
+        recommendation.clear();
+
+        HashMap<String, List<String>> listItems = new HashMap<String, List<String>>();
+        Set<String> s;
+        for (String item : lastClicks) {
+            s = new LinkedHashSet<>(getObjectProperties(item));
+            listItems.put(item, new ArrayList<>(s));
+
+            if(item.startsWith("tt") || item.startsWith("ts")) {
+                if (item.startsWith("tt"))
+                    numMovie++;
+                if (item.startsWith("ts"))
+                    numTV++;
+
+                for(String string : getMediaGenre(item)) {
+                    if(genreList.containsKey(string))
+                        genreList.put(string, genreList.get(string)+1);
+                    else
+                        genreList.put(string, 0);
+                }
+            }
+        }
+
+        HashMap<String, Integer> commonItems = new HashMap<String, Integer>();
+        for (int i = 0; i < lastClicks.size()-1; i++) {
+            temp_list = listItems.get(lastClicks.get(i));
+            for (int y = i + 1; y < lastClicks.size(); y++) {
+                temp_list2 = listItems.get(lastClicks.get(y));
+                for (String tempString : temp_list2) {
+                    if(temp_list.contains(tempString)) {
+                        if (!lastClicks.contains(tempString)) {
+                            if (commonItems.containsKey(tempString))
+                                commonItems.put(tempString, commonItems.get(tempString)+1);
+                            else
+                                commonItems.put(tempString, 0);
+                        }
+                    }
+                }
+            }
+        }
+
+        // add media from common people if there are at least 3 media from that person
+        Map<String, Integer> commonPersonSorted = sortByValues(commonItems);
+        Iterator<Map.Entry<String,Integer>> ittwo = commonPersonSorted.entrySet().iterator();
+        while (ittwo.hasNext()) {
+            Map.Entry pairs = (Map.Entry)ittwo.next();
+
+            if((int) pairs.getValue() < 2)
+                break;
+
+            String item = (String) pairs.getKey();
+            if (!lastClicks.contains(item) && !recommendation.contains(item)) {
+                if (item.startsWith("nm") || item.startsWith("tt") || item.startsWith("ts"))
+                    recommendation.add(item);
+            }
+
+            if(item.startsWith("nm")) {
+                temp_list = getObjectProperties((String) pairs.getKey());
+                for (String item1 : temp_list) {
+                    if (!lastClicks.contains(item1) && !recommendation.contains(item1)) {
+                        if (item1.startsWith("tt") || item1.startsWith("ts")) {
+                            recommendation.add(item1);
+                        }
+                    }
+                }
+            }
+        }
+
+        // finally add media from similar genres with the highest rating
+        // get maximum of 3 medias from each combination of genres
+        if(recommendation.size() < recommendationSize) {
+            int sizeTV, sizeMovie;
+            int tam = numTV+numMovie;
+            int total = recommendationSize-recommendation.size();
+            if(numTV < numMovie) {
+                sizeTV = (int) Math.floor(numTV/(float)tam * total);
+                sizeMovie = total-sizeTV;
+            }
+            else{
+                sizeMovie = (int) Math.floor(numMovie/(float)tam * total);
+                sizeTV = total - sizeMovie;
+            }
+
+            commonPersonSorted = sortByValues(genreList);
+
+            // TODO
+        }
     }
 
     private static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {

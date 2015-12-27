@@ -6,10 +6,12 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
-<jsp:useBean id="tvshowDetails" class="Beans.Media_List" scope="page"/>
+<jsp:useBean id="medialist" class="Beans.Media_List" scope="page"/>
+<jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
 <%
     genrelist.setInitialize();
-    tvshowDetails.setInitialize();
+    medialist.setInitialize();
+    personList.setInitialize();
 
     String tvshow = request.getParameter("tvshow");
     genrelist.addLastClicks(tvshow);
@@ -151,14 +153,14 @@
                             <table class="table" border="0">
                                 <tr>
                                     <td>
-                                        <img src=<%= tvshowDetails.getCover(tvshow) %> style="width:280px;height:350px;">
+                                        <img src=<%= medialist.getCover(tvshow) %> style="width:280px;height:350px;">
                                     </td>   
                                     <td valign="top">
-                                        <p style="font-size:150%"><b>Title:</b> <%= tvshowDetails.getTitle(tvshow)+"("+tvshowDetails.getSeasonDate(tvshow)+")" %> </p>
-                                        <p><b>Genre:</b> <%= tvshowDetails.getGenre(tvshow) %> </p>
-                                        <p><b>Raiting:</b> <%= tvshowDetails.getRating(tvshow) %> / 10</p>
-                                        <p><b>Number of seasons:</b> <%= tvshowDetails.getNumSeason(tvshow) %></p>
-                                        <p><b>Plot:</b> <%= tvshowDetails.getPlot(tvshow) %> </p>
+                                        <p style="font-size:150%"><b>Title:</b> <%= medialist.getTitle(tvshow)+"("+medialist.getSeasonDate(tvshow)+")" %> </p>
+                                        <p><b>Genre:</b> <%= medialist.getGenre(tvshow) %> </p>
+                                        <p><b>Raiting:</b> <%= medialist.getRating(tvshow) %> / 10</p>
+                                        <p><b>Number of seasons:</b> <%= medialist.getNumSeason(tvshow) %></p>
+                                        <p><b>Plot:</b> <%= medialist.getPlot(tvshow) %> </p>
 
                                     </td>   
                                     <td width="400">
@@ -166,11 +168,11 @@
                                         <ul>
                                             <%
                                                 String temp_celeb;
-                                                List<String> director_list = tvshowDetails.getPerson("Director", tvshow);
+                                                List<String> director_list = medialist.getPerson("Director", tvshow);
                                                 for(int i=0; i<director_list.size(); i++) {
                                                     temp_celeb = director_list.get(i);
                                             %>
-                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= medialist.getPersonName(temp_celeb) %></li></a>
                                             <%
                                                 }
                                             %>
@@ -179,11 +181,11 @@
                                         <p name="list_writers"><b>Writers:</b>
                                         <ul>
                                             <%
-                                                List<String> writer_list = tvshowDetails.getPerson("Writer", tvshow);
+                                                List<String> writer_list = medialist.getPerson("Writer", tvshow);
                                                 for(int i=0; i<writer_list.size(); i++) {
                                                     temp_celeb = writer_list.get(i);
                                             %>
-                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= medialist.getPersonName(temp_celeb) %></li></a>
                                             <%
                                                 }
                                             %>
@@ -192,11 +194,11 @@
                                         <p name="list_actors"><b>Actors:</b>
                                         <ul>
                                             <%
-                                                List<String> actor_list = tvshowDetails.getPerson("Actor", tvshow);
+                                                List<String> actor_list = medialist.getPerson("Actor", tvshow);
                                                 for(int i=0; i<actor_list.size(); i++) {
                                                     temp_celeb = actor_list.get(i);
                                             %>
-                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= tvshowDetails.getPersonName(temp_celeb) %></li></a>
+                                            <a href= <%= "detail_celebs.jsp?celeb="+temp_celeb %>><li> <%= medialist.getPersonName(temp_celeb) %></li></a>
                                             <%
                                                 }
                                             %>
@@ -222,16 +224,45 @@
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
                             </div>
                             <div class="panel-body" style="overflow-y: scroll; max-height:300px ">
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
+                                <div class="list-group">
+                                    <%
+                                        String temp_item;
+                                        List<String> recommendation = genrelist.getRecommendation();
+                                        for(int i=recommendation.size()-1; i>=0; i--) {
+                                            temp_item = recommendation.get(i);
+
+                                            if(temp_item.startsWith("tt")) {
+                                    %>
+                                    <a href=<%= "detail_movie.jsp?movie="+temp_item %> class="list-group-item">
+                                        <b> <%= "MOVIE: "+medialist.getTitle(temp_item)+"("+medialist.getDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else if(temp_item.startsWith("ts")) {
+                                    %>
+                                    <a href= <%= "detail_tvshow.jsp?tvshow="+temp_item %> class="list-group-item">
+                                        <b> <%= "TV_SHOW: "+medialist.getTitle(temp_item)+"("+medialist.getSeasonDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else {
+                                    %>
+                                    <a href=<%= "detail_celebs.jsp?celeb="+temp_item %> class="list-group-item">
+                                        <b><%= "CELEB: "+personList.getName(temp_item)+", "%></b>
+                                        <%= "Birth date: "+personList.getBirthDate(temp_item)+", " %>
+                                        <%= "Jobs: "+personList.getJobs(temp_item) %>
+                                    </a>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </div>
                             </div>
                         </div>
                     </div>

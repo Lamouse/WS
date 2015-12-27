@@ -6,10 +6,12 @@
 <html lang="en">
 
 <jsp:useBean id="genrelist" class="Beans.Genre_List" scope="page"/>
-<jsp:useBean id="personDetails" class="Beans.Person_List" scope="page"/>
+<jsp:useBean id="medialist" class="Beans.Media_List" scope="page"/>
+<jsp:useBean id="personList" class="Beans.Person_List" scope="page"/>
 <%
     genrelist.setInitialize();
-    personDetails.setInitialize();
+    medialist.setInitialize();
+    personList.setInitialize();
 
     String person = request.getParameter("celeb");
     genrelist.addLastClicks(person);
@@ -147,24 +149,26 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Celebs </h3>
                             </div>
-                            <div class="panel-body">
-                            <table class="table" border="0">
+                            <div class="panel-body" style="overflow-y: scroll; max-height: 650px">
+                            <table class="table" border="0 " style="height: 300px">
                                 <tr>
                                     <td>
-                                        <img src= <%= personDetails.getPhoto(person) %> style="width:280px;height:350px;">
+                                        <img src= <%= personList.getPhoto(person) %> style="width:280px;height:350px;">
                                     </td>   
                                     <td valign="top">
-                                        <p style="font-size:150%"><b>Name: </b> <%= personDetails.getName(person) %> </p>
-                                        <p style="font-size:100%"> <%= personDetails.getJobs(person) %> </p>
+                                        <p style="font-size:150%"><b>Name: </b> <%= personList.getName(person) %> </p>
+                                        <p style="font-size:100%"> <%= personList.getJobs(person) %> </p>
 
-                                        <p><b>Born: </b> <%= personDetails.getBirthDate(person) %> </p>
-                                        <p><b>Biography:</b> <%= personDetails.getBiography(person) %></p>
+                                        <p><b>Born: </b> <%= personList.getBirthDate(person) %> </p>
+                                        <p><b>Biography:</b> <%= personList.getBiography(person) %></p>
 
                                         <%
                                             String temp_media;
-                                            List<String> director_list = personDetails.getMedia("Director", person);
+                                            List<String> director_list = personList.getMedia("Director", person);
                                             if( director_list.size() > 0) {
                                         %>
+
+                                        <td width="400">
                                             <p name="list_of_media_director"><b> Director of: </b>
                                                 <ul>
                                                     <%
@@ -172,7 +176,7 @@
                                                         for(int i=0; i<director_list.size(); i++) {
                                                             temp_media = director_list.get(i);
                                                     %>
-                                                            <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                            <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personList.getMediaName(temp_media) %></li></a>
                                                     <%
                                                         }
                                                     %>
@@ -181,7 +185,7 @@
                                         <%
                                             }
 
-                                            List<String> writer_list = personDetails.getMedia("Writer", person);
+                                            List<String> writer_list = personList.getMedia("Writer", person);
                                             if( writer_list.size() > 0) {
                                         %>
                                             <p name="list_of_media_writer"><b> Writer of: </b>
@@ -191,7 +195,7 @@
                                                     for(int i=0; i<writer_list.size(); i++) {
                                                         temp_media = writer_list.get(i);
                                                 %>
-                                                    <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                    <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personList.getMediaName(temp_media) %></li></a>
                                                 <%
                                                     }
                                                 %>
@@ -200,7 +204,7 @@
                                         <%
                                             }
 
-                                            List<String> actor_list = personDetails.getMedia("Actor", person);
+                                            List<String> actor_list = personList.getMedia("Actor", person);
                                             if( actor_list.size() > 0 ) {
                                         %>
                                             <p name="list_of_media_actor"><b> Actor in: </b>
@@ -210,7 +214,7 @@
                                                     for(int i=0; i<actor_list.size(); i++) {
                                                         temp_media = actor_list.get(i);
                                                 %>
-                                                    <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personDetails.getMediaName(temp_media) %></li></a>
+                                                    <a href= <%= genrelist.getPageLink(temp_media)+temp_media %>><li> <%= personList.getMediaName(temp_media) %></li></a>
                                                 <%
                                                     }
                                                 %>
@@ -219,9 +223,7 @@
                                         <%
                                             }
                                         %>
-                                    </td>   
-                                    <td width="400">
-                                        
+
                                     </td>                              
                                 </tr>
                             </table>   
@@ -241,12 +243,46 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recommendation </h3>
                             </div>
-                            <div class="panel-body" style="overflow-y: scroll; height:300px ">
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
-                                <a href="#" class="list-group-item"> Drekc</a>
-                                <a href="#" class="list-group-item"> Something</a>
+                            <div class="panel-body" style="overflow-y: scroll; max-height:300px ">
+                                <div class="list-group">
+                                    <%
+                                        String temp_item;
+                                        List<String> recommendation = genrelist.getRecommendation();
+                                        for(int i=recommendation.size()-1; i>=0; i--) {
+                                            temp_item = recommendation.get(i);
+
+                                            if(temp_item.startsWith("tt")) {
+                                    %>
+                                    <a href=<%= "detail_movie.jsp?movie="+temp_item %> class="list-group-item">
+                                        <b> <%= "MOVIE: "+medialist.getTitle(temp_item)+"("+medialist.getDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else if(temp_item.startsWith("ts")) {
+                                    %>
+                                    <a href= <%= "detail_tvshow.jsp?tvshow="+temp_item %> class="list-group-item">
+                                        <b> <%= "TV_SHOW: "+medialist.getTitle(temp_item)+"("+medialist.getSeasonDate(temp_item)+"), " %> </b>
+                                        <%= "Genre: "+medialist.getGenre(temp_item)+", " %>
+                                        <%= "Runtime: "+medialist.getRuntime(temp_item)+"m, "%>
+                                        <%= "Rating: "+medialist.getRating(temp_item)%>
+                                    </a>
+                                    <%
+                                    }
+                                    else {
+                                    %>
+                                    <a href=<%= "detail_celebs.jsp?celeb="+temp_item %> class="list-group-item">
+                                        <b><%= "CELEB: "+personList.getName(temp_item)+", "%></b>
+                                        <%= "Birth date: "+personList.getBirthDate(temp_item)+", " %>
+                                        <%= "Jobs: "+personList.getJobs(temp_item) %>
+                                    </a>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </div>
                             </div>
                         </div>
                     </div>
