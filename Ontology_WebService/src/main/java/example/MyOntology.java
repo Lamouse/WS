@@ -788,6 +788,45 @@ public class MyOntology {
         return result;
     }
 
+    private ArrayList<String> getMediabyGenre(String type, ArrayList<String> genreList, int num) {
+        ArrayList<String> result = new ArrayList<String>();
+
+        String sparqlQuery = sparqlPrefix +
+                "SELECT ?media\n" +
+                "\tWHERE {\n" +
+                "\t\t?media rdf:type my:"+type+".\n";
+
+        for(String genre: genreList) {
+            sparqlQuery += "\t\t?media my:hasGenre my:" + genre + ".\n";
+        }
+
+        sparqlQuery +=
+                "\t\t?media my:hasTitle ?title.\n" +
+                "\t\t?media my:hasRating ?rating.\n" +
+                "\t}\n" +
+                "\tORDER BY DESC(?rating) ?title\n" +
+                "\tOFFSET 0\n" +
+                "\tLIMIT "+numPage;
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
+        String tempString;
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.nextSolution();
+            RDFNode temp = qs.get("media");
+
+            tempString = temp.asNode().getLocalName();
+            if(!recommendation.contains(tempString) && !lastClicks.contains(tempString))
+                result.add(tempString);
+        }
+
+        qe.close();
+
+        return result;
+    }
+
     private int searchIndividulaObjectProperty(String individual, List<String> searchProperty, List<String> searchValues) {
         List<String> results = getObjectProperties(individual, searchProperty);
 
@@ -957,7 +996,8 @@ public class MyOntology {
     private void updateRecommendation() {
         int numTV = 0;
         int numMovie = 0;
-        HashMap<String, Integer> genreList = new HashMap<String, Integer>();
+        HashMap<String, Integer> genreTVList = new HashMap<String, Integer>();
+        HashMap<String, Integer> genreMovieList = new HashMap<String, Integer>();
         List<String> temp_list;
         List<String> temp_list2;
 
@@ -969,17 +1009,24 @@ public class MyOntology {
             s = new LinkedHashSet<>(getObjectProperties(item));
             listItems.put(item, new ArrayList<>(s));
 
-            if(item.startsWith("tt") || item.startsWith("ts")) {
-                if (item.startsWith("tt"))
-                    numMovie++;
-                if (item.startsWith("ts"))
-                    numTV++;
+            if (item.startsWith("tt")) {
+                numMovie++;
 
                 for(String string : getMediaGenre(item)) {
-                    if(genreList.containsKey(string))
-                        genreList.put(string, genreList.get(string)+1);
+                    if(genreMovieList.containsKey(string))
+                        genreMovieList.put(string, genreMovieList.get(string)+1);
                     else
-                        genreList.put(string, 0);
+                        genreMovieList.put(string, 0);
+                }
+            }
+            if (item.startsWith("ts")) {
+                numTV++;
+
+                for(String string : getMediaGenre(item)) {
+                    if(genreTVList.containsKey(string))
+                        genreTVList.put(string, genreTVList.get(string)+1);
+                    else
+                        genreTVList.put(string, 0);
                 }
             }
         }
@@ -991,12 +1038,10 @@ public class MyOntology {
                 temp_list2 = listItems.get(lastClicks.get(y));
                 for (String tempString : temp_list2) {
                     if(temp_list.contains(tempString)) {
-                        if (!lastClicks.contains(tempString)) {
-                            if (commonItems.containsKey(tempString))
-                                commonItems.put(tempString, commonItems.get(tempString)+1);
-                            else
-                                commonItems.put(tempString, 0);
-                        }
+                        if (commonItems.containsKey(tempString))
+                            commonItems.put(tempString, commonItems.get(tempString)+1);
+                        else
+                            commonItems.put(tempString, 0);
                     }
                 }
             }
@@ -1017,7 +1062,7 @@ public class MyOntology {
                     recommendation.add(item);
             }
 
-            if(item.startsWith("nm")) {
+            if(item.startsWith("nm") && lastClicks.contains(item)) {
                 temp_list = getObjectProperties((String) pairs.getKey());
                 for (String item1 : temp_list) {
                     if (!lastClicks.contains(item1) && !recommendation.contains(item1)) {
@@ -1044,10 +1089,31 @@ public class MyOntology {
                 sizeTV = total - sizeMovie;
             }
 
-            commonPersonSorted = sortByValues(genreList);
+            Map<String, Integer> genreMovieListSorted = sortByValues(genreMovieList);
+            Map<String, Integer> genreTVListSorted = sortByValues(genreTVList);
 
-            // TODO
+            recommendation.addAll(findMediaByClass("Movie", genreMovieListSorted, sizeMovie));
+            recommendation.addAll(findMediaByClass("TV_Show", genreTVListSorted, sizeTV));
         }
+    }
+
+    private ArrayList<String> findMediaByClass(String type, Map<String, Integer> genreList, int num) {
+        ArrayList<String> result = new ArrayList<String>();
+
+        Set<String> keys = genreList.keySet();
+        ArrayList<String> keysArray = new ArrayList<String>(keys);
+        ArrayList<String> tempArray;
+
+        int temp;
+        while(!keysArray.isEmpty() && num > 0){
+            temp = Math.min(3, num);
+            tempArray = getMediabyGenre(type, keysArray, temp);
+            result.addAll(tempArray);
+
+            num -= tempArray.size();
+            keysArray.remove(keysArray.size()-1);
+        }
+        return  result;
     }
 
     private static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
@@ -1071,4 +1137,3 @@ public class MyOntology {
         System.out.println("WebService is running...");
     }
 }
-
