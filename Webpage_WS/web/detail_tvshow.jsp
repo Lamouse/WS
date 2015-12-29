@@ -228,7 +228,7 @@
                                     <%
                                         String temp_item;
                                         List<String> recommendation = genrelist.getRecommendation();
-                                        for(int i=recommendation.size()-1; i>=0; i--) {
+                                        for(int i=0; i<recommendation.size(); i++) {
                                             temp_item = recommendation.get(i);
 
                                             if(temp_item.startsWith("tt")) {

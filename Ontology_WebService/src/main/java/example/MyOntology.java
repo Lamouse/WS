@@ -806,7 +806,7 @@ public class MyOntology {
                 "\t}\n" +
                 "\tORDER BY DESC(?rating) ?title\n" +
                 "\tOFFSET 0\n" +
-                "\tLIMIT "+numPage;
+                "\tLIMIT 10";
 
         Query query = QueryFactory.create(sparqlQuery);
         QueryExecution qe = QueryExecutionFactory.create(query, model);
@@ -820,6 +820,9 @@ public class MyOntology {
             tempString = temp.asNode().getLocalName();
             if(!recommendation.contains(tempString) && !lastClicks.contains(tempString))
                 result.add(tempString);
+
+            if(result.size() == num)
+                break;
         }
 
         qe.close();
@@ -1105,8 +1108,12 @@ public class MyOntology {
         ArrayList<String> tempArray;
 
         int temp;
+
         while(!keysArray.isEmpty() && num > 0){
-            temp = Math.min(3, num);
+            if(keysArray.size()==1)
+                temp = num;
+            else
+                temp = Math.min(3, num);
             tempArray = getMediabyGenre(type, keysArray, temp);
             result.addAll(tempArray);
 
