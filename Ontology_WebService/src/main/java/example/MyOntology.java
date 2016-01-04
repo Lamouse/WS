@@ -1066,7 +1066,7 @@ public class MyOntology {
             }
 
             if(item.startsWith("nm") && lastClicks.contains(item)) {
-                temp_list = getObjectProperties((String) pairs.getKey());
+                temp_list = getObjectProperties(item);
                 for (String item1 : temp_list) {
                     if (!lastClicks.contains(item1) && !recommendation.contains(item1)) {
                         if (item1.startsWith("tt") || item1.startsWith("ts")) {
@@ -1097,6 +1097,21 @@ public class MyOntology {
 
             recommendation.addAll(findMediaByClass("Movie", genreMovieListSorted, sizeMovie));
             recommendation.addAll(findMediaByClass("TV_Show", genreTVListSorted, sizeTV));
+        }
+
+        if(recommendation.size() == 0) {
+            if(lastClicks.size() > 0) {
+                for(String item : lastClicks) {
+                    temp_list = getObjectProperties(item);
+                    for (String item1 : temp_list) {
+                        if (!lastClicks.contains(item1) && !recommendation.contains(item1)) {
+                            if (item1.startsWith("tt") || item1.startsWith("ts")) {
+                                recommendation.add(item1);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
